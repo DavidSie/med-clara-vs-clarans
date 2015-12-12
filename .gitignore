@@ -1,2 +1,6 @@
 *.o
 claraVSclarans
+.project
+.cproject
+.settings/
+Makefile
