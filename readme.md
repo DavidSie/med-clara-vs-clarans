@@ -9,8 +9,8 @@ CXX=/usr/local/bin/gcc-4.8
 
 CXXFLAGS=-lstdc++  -Wall
 
-all:	main.o algorytm.o  algorytm.o algorytmClara.o algorytmClarans.o  readingModule.o 
-		$(CXX)    -o  claraVSclarans  algorytm.o algorytmClara.o algorytmClarans.o  readingModule.o main.o  $(CXXFLAGS)
+all:	main.o algorytm.o  algorytm.o algorytmClara.o algorytmClarans.o  algorytmPam.o readingModule.o 
+		$(CXX)    -o  claraVSclarans  algorytm.o algorytmClara.o algorytmClarans.o  algorytmPam.o readingModule.o main.o  $(CXXFLAGS)
 main.o:	main.cpp
 		$(CXX) -o main.o -c main.cpp $(CXXFLAGS) 
 algorytm.o: algorytm.cpp algorytm.h
