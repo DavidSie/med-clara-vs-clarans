@@ -21,6 +21,9 @@ algorytmClara.o: algorytmClara.cpp algorytmClara.h
 algorytmClarans.o: algorytmClarans.cpp algorytmClarans.h
 		$(CXX) -o  algorytmClarans.o -c algorytmClarans.cpp $(CXXFLAGS)
 
+algorytmPam.o: algorytmPam.cpp algorytmPam.h
+		$(CXX) -o  algorytmPam.o -c algorytmPam.cpp $(CXXFLAGS)
+		
 readingModule.o: readingModule.cpp readingModule.h
 		$(CXX) -o  readingModule.o -c readingModule.cpp $(CXXFLAGS)
 
