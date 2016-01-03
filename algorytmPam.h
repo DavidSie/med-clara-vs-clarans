@@ -13,10 +13,18 @@ class AlgorytmPam : public  Algorytm{
 	int k_; //liczba grup
 	int n_;
 	std::vector<punkt> medodoidy_;
+
+	int wylosuj(std::vector<int> juz_wylosowane);
+	std::vector<punkt> tc(std::vector<int> klasyfikacja_punktow);
+	double cij(punkt i,punkt j);
+	double cjih(punkt j,punkt i, punkt h);
+	std::vector<int> klasyfikacja_punktow();
+
 	public:
 	AlgorytmPam(const std::vector<punkt> &dane,int k){dane_=dane; k_=k; n_=dane.size(); srand(time(NULL));}
-	void pam();
-	int wylosuj(std::vector<int> juz_wylosowane);
+	std::vector<punkt>  pam();
+
+
 
 
 };

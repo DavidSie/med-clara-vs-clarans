@@ -13,6 +13,8 @@
 #include <stdlib.h>
 #include <time.h>
 #include <vector>
+#include <math.h>
+#include <limits.h>
 //zakladamy punkty w przestrzeni 2d
 typedef std::pair<double,double> punkt;
 class Algorytm {
