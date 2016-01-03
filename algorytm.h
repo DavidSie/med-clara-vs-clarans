@@ -16,7 +16,11 @@
 //zakladamy punkty w przestrzeni 2d
 typedef std::pair<double,double> punkt;
 class Algorytm {
+protected:
+	std::vector<punkt> dane_;
 
+public:
+//	Algorytm(const std::vector<punkt> &dane){dane_=dane;}
 };
 
 

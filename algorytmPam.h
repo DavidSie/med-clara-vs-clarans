@@ -9,12 +9,14 @@
 #define ALGORYTMPAM_H_
 
 #include "algorytm.h"
-class AlgorytmPam{
-	int k; //liczba grup
-	std::vector<punkt> medodoidy;
+class AlgorytmPam : public  Algorytm{
+	int k_; //liczba grup
+	int n_;
+	std::vector<punkt> medodoidy_;
 	public:
-	AlgorytmPam(){ srand(time(NULL));}
+	AlgorytmPam(const std::vector<punkt> &dane,int k){dane_=dane; k_=k; n_=dane.size(); srand(time(NULL));}
 	void pam();
+	int wylosuj(std::vector<int> juz_wylosowane);
 
 
 };
