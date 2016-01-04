@@ -24,16 +24,30 @@ std::vector<punkt> AlgorytmPam::pam(){
 	for(int i=0;i<medodoidy_.size(); i++)
 		std::cout<<"("<<(double)medodoidy_.at(i).first<<", "<<(double)medodoidy_.at(i).second<<")"<<std::endl;
 	//	 Dla każ dej pary: (obiekt zwykły h, obiekt reprezentatywny i ) wyznacz całkowity koszt zamiany TCih
-	std::vector<punkt> nowe_medodoidy (k_);
+	std::vector<punkt> nowe_medodoidy =medodoidy_;
 	std::vector<punkt> stare_metodoidy;
-//	do{
+	bool kolejnaPentla=false;
+	do{
 		stare_metodoidy=nowe_medodoidy;
 		// przydzial do klas
 		std::vector<int> klasyfikacjaPunktow=klasyfikacja_punktow();
 
 		// obliczenie TCih
 		nowe_medodoidy=tc(klasyfikacjaPunktow);
-//	}while(nowe_medodoidy!=stare_metodoidy);
+
+		kolejnaPentla=false;
+		for(int h=0;h<nowe_medodoidy.size();h++)
+			if(nowe_medodoidy.at(h)!=stare_metodoidy.at(h)){
+				kolejnaPentla=true;
+				break;
+			}
+
+//		for(int s=0;s<stare_metodoidy.size();s++)
+//					std::cout<<"stary medodoid nr "<<s<<"("<<stare_metodoidy.at(s).first<<", "<<stare_metodoidy.at(s).second<<")"<<std::endl;
+//		for(int s=0;s<nowe_medodoidy.size();s++)
+//					std::cout<<"nowy medodoid nr "<<s<<"("<<nowe_medodoidy.at(s).first<<", "<<nowe_medodoidy.at(s).second<<")"<<std::endl;
+
+	}while(kolejnaPentla);
 	return nowe_medodoidy;
 }
 
