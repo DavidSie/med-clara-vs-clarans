@@ -8,8 +8,21 @@
 #ifndef ALGORYTM_H_
 #define ALGORYTM_H_
 
-class Algorytm {
 
+#include <iostream>
+#include <stdlib.h>
+#include <time.h>
+#include <vector>
+#include <math.h>
+#include <limits.h>
+//zakladamy punkty w przestrzeni 2d
+typedef std::pair<double,double> punkt;
+class Algorytm {
+protected:
+	std::vector<punkt> dane_;
+
+public:
+//	Algorytm(const std::vector<punkt> &dane){dane_=dane;}
 };
 
 
