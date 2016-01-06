@@ -21,8 +21,12 @@ std::vector<punkt> AlgorytmPam::pam(){
 		medodoidy_.push_back(dane_.at(juz_wylosowane_k.at(j)));
 	}
 	std::cout<<"metodoidy:"<<std::endl;
-	for(int i=0;i<medodoidy_.size(); i++)
-		std::cout<<"("<<(double)medodoidy_.at(i).first<<", "<<(double)medodoidy_.at(i).second<<")"<<std::endl;
+	for(int i=0;i<medodoidy_.size(); i++){
+		std::cout<<"(";
+		for (int k=0;k<medodoidy_.at(i).size();k++)
+			std::cout<<(double)medodoidy_.at(i).at(k)<<", ";
+		std::cout<<")"<<std::endl;
+	}
 	//	 Dla każ dej pary: (obiekt zwykły h, obiekt reprezentatywny i ) wyznacz całkowity koszt zamiany TCih
 	std::vector<punkt> nowe_medodoidy =medodoidy_;
 	std::vector<punkt> stare_metodoidy;
@@ -44,9 +48,12 @@ std::vector<punkt> AlgorytmPam::pam(){
 
 //		for(int s=0;s<stare_metodoidy.size();s++)
 //					std::cout<<"stary medodoid nr "<<s<<"("<<stare_metodoidy.at(s).first<<", "<<stare_metodoidy.at(s).second<<")"<<std::endl;
-//		for(int s=0;s<nowe_medodoidy.size();s++)
-//					std::cout<<"nowy medodoid nr "<<s<<"("<<nowe_medodoidy.at(s).first<<", "<<nowe_medodoidy.at(s).second<<")"<<std::endl;
-
+		for(int s=0;s<nowe_medodoidy.size();s++){
+					std::cout<<"nowy medodoid nr "<<s<<" (";
+					for(int k=0;k<nowe_medodoidy.at(s).size();k++)
+						std::cout<<nowe_medodoidy.at(s).at(k)<<", ";
+					std::cout<<")"<<std::endl;
+		}
 	}while(kolejnaPentla);
 	return nowe_medodoidy;
 }
@@ -74,7 +81,7 @@ std::vector<punkt> AlgorytmPam::tc(std::vector<int> klasyfikacja_punktow){
 	// stare medodidy
 
 		for (int k=0; k<dane_.size(); k++){
-			double tc_min=INT_MAX;
+			double tc_min=DBL_MAX;
 			double tc=0.0;
 			// kandydaci na nowe medodoidy
 
@@ -88,7 +95,10 @@ std::vector<punkt> AlgorytmPam::tc(std::vector<int> klasyfikacja_punktow){
 			if (tc<tc_min){
 				tc_min=tc;
 				nowe_medodoidy.at(i)=dane_.at(k);
-				std::cout<<"nowy nr "<< i<<" metodoid: ("<<nowe_medodoidy.at(i).first<<", "<<nowe_medodoidy.at(i).second<<")"<<std::endl;
+//				std::cout<<"nowy nr "<< i<<" metodoid: (";
+//				for(k=0;k<nowe_medodoidy.at(i).size();k++)
+//					std::cout<<nowe_medodoidy.at(i).at(k)<<", ";
+//				std::cout<<")"<<std::endl;
 			}
 		}
 	}
@@ -96,7 +106,14 @@ std::vector<punkt> AlgorytmPam::tc(std::vector<int> klasyfikacja_punktow){
 }
 
 double AlgorytmPam::cij(punkt i,punkt j){
-	double wynik=sqrt((i.first-j.first)*(i.first-j.first)+(i.second-j.second)*(i.second-j.second));
+	double wynik=0;
+	double kwadrat_wyniku=0;
+	if(i.size()==j.size()){
+		for(int k=0;k<i.size();k++)
+			kwadrat_wyniku+=(i.at(k)-j.at(k))*(i.at(k)-j.at(k));
+	}
+
+	wynik=sqrt(kwadrat_wyniku);
 	return wynik;
 }
 
@@ -109,7 +126,7 @@ std::vector<int> AlgorytmPam::klasyfikacja_punktow(){
 // klasyfikujemy punkt do najblizszego medodidu
 	std::vector<int> klasyfikacja_punktow (dane_.size());
 	for(int j=0; j<dane_.size();j++){
-		double min_odleglosc=INT_MAX;
+		double min_odleglosc=DBL_MAX;
 		for (int i=0;i<medodoidy_.size();i++){
 			double odleglosc=cij(medodoidy_.at(i),dane_.at(j));
 			if (odleglosc<min_odleglosc){

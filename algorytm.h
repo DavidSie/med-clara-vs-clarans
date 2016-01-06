@@ -15,8 +15,9 @@
 #include <vector>
 #include <math.h>
 #include <limits.h>
+#include <cfloat>
 //zakladamy punkty w przestrzeni 2d
-typedef std::pair<double,double> punkt;
+typedef std::vector<double> punkt;
 class Algorytm {
 protected:
 	std::vector<punkt> dane_;
