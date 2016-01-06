@@ -8,12 +8,21 @@
 #include "readingModule.h"
 #include "algorytmPam.h"
 
-
+std::vector<punkt> generujDane();
 
 
 using namespace std;
 
 int main() {
+//	AlgorytmClara algClara=AlgorytmClara(dane,2);
+//	algClara.wyliczenieMedodoidow();
+
+	AlgorytmPam algPam=AlgorytmPam(generujDane(),2);
+	algPam.pam();
+    return 0;
+}
+
+std::vector<punkt> generujDane(){
 	punkt punkt1 (1,1);
 	punkt punkt2 (1.2, 1.2);
 	punkt punkt3 (1.8, 1.8);
@@ -26,6 +35,11 @@ int main() {
 	punkt punkt8 (8,8);
 	punkt punkt9 (9,9);
 
+	punkt punkt10 (0.9,0.9);
+	punkt punkt11 (1.9,1.9);
+	punkt punkt12 (1.2,0.9);
+	punkt punkt13 (1.2,0.9);
+
 	std::vector<punkt> dane;
 	dane.push_back(punkt1);
 	dane.push_back(punkt2);
@@ -37,11 +51,11 @@ int main() {
 	dane.push_back(punkt8);
 	dane.push_back(punkt9);
 
-
-	AlgorytmPam algPam=AlgorytmPam(dane,2);
-	algPam.pam();
-	std::cout<<"hello world";
-    return 0;
+	for(int i=0;i<60;i++){
+		punkt punktNr (1+0.01*i,1+0.01*i);
+		dane.push_back(punktNr);
+	}
+	return dane;
 }
 
 

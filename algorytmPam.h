@@ -21,6 +21,8 @@ class AlgorytmPam : public  Algorytm{
 	std::vector<int> klasyfikacja_punktow();
 
 	public:
+	AlgorytmPam(){srand(time(NULL));}
+	void setData(const std::vector<punkt> &dane,int k){dane_=dane; k_=k; n_=dane.size();}
 	AlgorytmPam(const std::vector<punkt> &dane,int k){dane_=dane; k_=k; n_=dane.size(); srand(time(NULL));}
 	std::vector<punkt>  pam();
 
