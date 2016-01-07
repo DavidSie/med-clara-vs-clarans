@@ -15,10 +15,10 @@ class AlgorytmPam : public  Algorytm{
 	std::vector<punkt> medodoidy_;
 
 	int wylosuj(std::vector<int> juz_wylosowane);
-	std::vector<punkt> tc(std::vector<int> klasyfikacja_punktow);
+	double tc(std::vector<int> klasyfikacjaPunktow);
 	double cij(punkt i,punkt j);
-	double cjih(punkt j,punkt i, punkt h);
-	std::vector<int> klasyfikacja_punktow();
+	double cjmp(punkt j,punkt m, punkt p);
+	std::vector<int> klasyfikacja_punktow(std::vector<punkt> metodoidy,std::vector<punkt> dane_do_klasyfikacji);
 
 	public:
 	AlgorytmPam(){srand(time(NULL));}
