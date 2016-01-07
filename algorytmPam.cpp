@@ -40,9 +40,9 @@ std::vector<punkt> AlgorytmPam::pam(){
 		kolejnaPentla=false;
 
 		if(tc_<0){
-			std::cout<<"tc= "<<tc_<<std::endl;
 			kolejnaPentla=true;
 		}
+		std::cout<<"tc= "<<tc_<<std::endl;
 
 		for(int s=0;s<medodoidy_.size();s++){
 					std::cout<<"nowy medodoid nr "<<s<<" (";
@@ -76,37 +76,58 @@ double AlgorytmPam::tc(std::vector<int> klasyfikacjaPunktow){
 // w przeciwnym wypadku policz Cjmp = d(Oj,O Nowy metodoid)-d(Oj,O stary metodoid)
 
 	std::vector<punkt> nowe_medodoidy=medodoidy_;
-	double tc=0.0;
+	double tc_suma=0.0;
 	for (int m=0;m<medodoidy_.size();m++){
 	// stare medodidy
+		double tc_min=DBL_MAX;
 		for (int p=0; p<dane_.size(); p++){
-			double tc_min=DBL_MAX;
+			double tc=0.0;
 			// kandydaci na nowe medodoidy
-
+			std::vector<punkt> tymczasowe_nowe_metodoidy=medodoidy_;
+			tymczasowe_nowe_metodoidy.at(m)=dane_.at(p); // wstawiamy nowy punkt w miejsce starego
+			std::vector<int> nowa_klasyfikacja = klasyfikacja_punktow(tymczasowe_nowe_metodoidy,dane_);
 			for(int j=0; j<dane_.size();j++){
 			// klasyfikacja punktow dla nowej klasyfikacja
-				std::vector<punkt> tymczasowe_nowe_metodoidy=medodoidy_;
-				tymczasowe_nowe_metodoidy.at(m)=dane_.at(j); // wstawiamy nowy punkt w miejsce starego
-				std::vector<int> nowa_klasyfikacja = klasyfikacja_punktow(tymczasowe_nowe_metodoidy,dane_);
-
-			// kandydat musi nalezec do danej klasy
+//				std::cout<<"przed if'ami"<<std::endl;
+				// scenariusz 1. Oj przechodzi z Om do Oj,2
+				if(klasyfikacjaPunktow.at(j)==m && nowa_klasyfikacja.at(j)!=p){
+					tc+=cjmp(dane_.at(j),medodoidy_.at(m),dane_.at(nowa_klasyfikacja.at(j) ));
+				}
+				// scenariusz 2. Oj  z Om do Op
+				if(klasyfikacjaPunktow.at(j)==m &&  nowa_klasyfikacja.at(j)==p){
+					tc+=cjmp(dane_.at(j),medodoidy_.at(m),dane_.at(p));
+				}
+				// scenariusz 3. Oj nie było w klasie Om i nie przechodzi do Op
 				if (klasyfikacjaPunktow.at(j)!=m &&  nowa_klasyfikacja.at(j)!=p)
 					continue;
-			// punkty od ktorych liczymy odleglosc
-					tc+=cjmp(dane_.at(j),medodoidy_.at(m),dane_.at(p));
+				// scenariusz 4. Oj nalezy do klasy reprezentowanej przez Oj,2
+				// i przechodzi do klasy Op
+				if (klasyfikacjaPunktow.at(j)!=m &&  nowa_klasyfikacja.at(j)==p){
+					tc+=cjmp(dane_.at(j),medodoidy_.at(klasyfikacjaPunktow.at(j)),dane_.at(p));
+				}
+
+
 			}
+			std::cout<<"nr "<< m <<" : (";
+			for(int k=0;k<dane_.at(p).size();k++)
+								std::cout<<dane_.at(p).at(k)<<", ";
+							std::cout<<")"<<" z wynikiem tc= "<<tc;
+			std::cout<<" w starej klasyfikacji:"<<klasyfikacjaPunktow.at(p)<<" w nowej: "<<nowa_klasyfikacja.at(p)<<std::endl;
 			if (tc<tc_min){
+				std::cout<<"tc_min= "<<tc_min<<"  ";
 				tc_min=tc;
+				// jezeli jakis punkt wpadnie a  potem wypadnie to tez sie dodaje :/
+				tc_suma=+tc;
 				nowe_medodoidy.at(m)=dane_.at(p);
-//				std::cout<<"nowy nr "<< i<<" metodoid: (";
-//				for(k=0;k<nowe_medodoidy.at(i).size();k++)
-//					std::cout<<nowe_medodoidy.at(i).at(k)<<", ";
-//				std::cout<<")"<<std::endl;
+				std::cout<<"nowy metodoid nr "<< m <<" : (";
+				for(int k=0;k<nowe_medodoidy.at(m).size();k++)
+					std::cout<<nowe_medodoidy.at(m).at(k)<<", ";
+				std::cout<<")"<<" z wynikiem tc= "<<tc<<std::endl;
 			}
 		}
 	}
 	medodoidy_ =nowe_medodoidy;
-	return tc;
+	return tc_suma;
 }
 
 double AlgorytmPam::cij(punkt i,punkt j){
