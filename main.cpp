@@ -24,15 +24,16 @@ int main() {
 
 std::vector<punkt> generujDane(){
 
-	int n=5;
+	int n=3;
+	int dl_wektora=1;
 	std::vector<punkt> dane;
 	for(int i=0;i<n;i++){
-		punkt punktNr (4,1+i);
+		punkt punktNr (dl_wektora,1+i);
 		dane.push_back(punktNr);
 	}
 
 	for(int i=0;i<n;i++){
-		punkt punktNr (4,80+i);
+		punkt punktNr (dl_wektora,50+i);
 		dane.push_back(punktNr);
 	}
 	return dane;
