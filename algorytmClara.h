@@ -12,11 +12,12 @@
 #include "algorytmPam.h"
 
 class AlgorytmClara : public  Algorytm{
-	AlgorytmPam pam;
 	int k_;
 	int n_;
+	std::vector<punkt> losowanieProbekDanych(std::vector<punkt> data, int ilosc);
+	double tc(std::vector<punkt> dane, std::vector<punkt> medodoidy);
 public:
-	AlgorytmClara(const std::vector<punkt> &dane,int k){dane_=dane; k_=k; n_=dane.size(); pam=AlgorytmPam();}
+	AlgorytmClara(const std::vector<punkt> &dane,int k){dane_=dane; k_=k; n_=dane.size();}
 	std::vector<punkt> wyliczenieMedodoidow();
 };
 

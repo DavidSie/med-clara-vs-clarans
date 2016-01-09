@@ -16,8 +16,10 @@
 #include <math.h>
 #include <limits.h>
 #include <cfloat>
-//zakladamy punkty w przestrzeni 2d
+// definiujemy nowe zmienne
 typedef std::vector<double> punkt;
+typedef std::vector<std::vector<double> > wektorPunktow;
+
 class Algorytm {
 protected:
 	std::vector<punkt> dane_;

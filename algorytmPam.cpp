@@ -117,11 +117,11 @@ std::vector<double> AlgorytmPam::tc(std::vector<int> klasyfikacjaPunktow){
 
 
 			}
-			std::cout<<"nr "<< m <<" : (";
-			for(int k=0;k<dane_.at(p).size();k++)
-								std::cout<<dane_.at(p).at(k)<<", ";
-							std::cout<<")"<<" z wynikiem tc= "<<tc;
-			std::cout<<" w starej klasyfikacji:"<<klasyfikacjaPunktow.at(p)<<" w nowej: "<<nowa_klasyfikacja.at(p)<<std::endl;
+//			std::cout<<"nr "<< m <<" : (";
+//			for(int k=0;k<dane_.at(p).size();k++)
+//								std::cout<<dane_.at(p).at(k)<<", ";
+//							std::cout<<")"<<" z wynikiem tc= "<<tc;
+//			std::cout<<" w starej klasyfikacji:"<<klasyfikacjaPunktow.at(p)<<" w nowej: "<<nowa_klasyfikacja.at(p)<<std::endl;
 
 			//	 zapisz polozenie  oraz tc nowego kandydata
 			if(tc<medodoid_kandydat.second){
