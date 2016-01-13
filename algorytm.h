@@ -16,6 +16,8 @@
 #include <math.h>
 #include <limits.h>
 #include <cfloat>
+#include <map>
+
 // definiujemy nowe zmienne
 typedef std::vector<double> punkt;
 typedef std::vector<std::vector<double> > wektorPunktow;

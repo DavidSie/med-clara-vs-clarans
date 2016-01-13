@@ -14,8 +14,8 @@ std::vector<punkt> generujDane();
 using namespace std;
 
 int main() {
-	AlgorytmClara algClara=AlgorytmClara(generujDane(),2);
-	algClara.wyliczenieMedodoidow();
+//	AlgorytmClara algClara=AlgorytmClara(generujDane(),2);
+//	algClara.wyliczenieMedodoidow();
 
 	AlgorytmPam algPam=AlgorytmPam(generujDane(),2);
 	algPam.pam();
@@ -24,13 +24,13 @@ int main() {
 
 std::vector<punkt> generujDane(){
 //    testy alg. pam
-//	int n=3;
-//	int dl_wektora=1;
+	int n=3;
+	int dl_wektora=2;
 
 
 //    testy alg. clara
-	int n=100;
-	int dl_wektora=1;
+//	int n=100;
+//	int dl_wektora=1;
 	std::vector<punkt> dane;
 	for(int i=0;i<n;i++){
 		punkt punktNr (dl_wektora,1+i);

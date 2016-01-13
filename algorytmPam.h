@@ -19,8 +19,11 @@ class AlgorytmPam : public  Algorytm{
 	double cij(punkt i,punkt j);
 	double cjmp(punkt j,punkt m, punkt p);
 	std::vector<int> klasyfikacja_punktow(std::vector<punkt> metodoidy,std::vector<punkt> dane_do_klasyfikacji);
+	int index(std::vector<int> data,int value);
 
 	public:
+	void wypiszPunkt(punkt punkt_);
+	std::pair< double, std::map<int, std::vector<int> >  > totalCost(std::vector<punkt> dane_,std::vector<int> medoids_idx);
 	AlgorytmPam(){srand(time(NULL));}
 	void setData(const std::vector<punkt> &dane,int k){dane_=dane; k_=k; n_=dane.size();}
 	AlgorytmPam(const std::vector<punkt> &dane,int k){dane_=dane; k_=k; n_=dane.size(); srand(time(NULL));}
