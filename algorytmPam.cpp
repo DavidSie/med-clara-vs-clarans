@@ -21,7 +21,6 @@ std::vector<punkt> AlgorytmPam::pam(){
 	std::pair< double, std::map<int, std::vector<int> >  > extractor=totalCost(dane_,medoids_idx);
 	double pre_cost=extractor.first;
 	std::map<int, std::vector<int> > medoids=extractor.second;
-	std::cout<<" medoids.size() "<<medoids.size()<<std::endl;
 	double current_cost = pre_cost;
 	std::vector<int> best_choice;
 	std::map<int, std::vector<int> > best_res;
@@ -50,7 +49,7 @@ std::vector<punkt> AlgorytmPam::pam(){
 		// Increment the counter
 		iter_count += 1;
 
-		std::cout<<"current_cost: "<< current_cost<<std::endl;
+		std::cout<<"[INFO][PAM]current_cost: "<< current_cost<<std::endl;
 
 		if( best_choice == medoids_idx){
 			for(int i=0; i<medoids_idx.size();i++){
@@ -81,7 +80,7 @@ int AlgorytmPam::index(std::vector<int> data,int value){
 
 }
  void AlgorytmPam::wypiszPunkt(punkt punkt_){
-	 std::cout<<"( ";
+	 std::cout<<"[INFO][PAM]( ";
 	 for (int i=0; i<punkt_.size();i++)
 		 std::cout<<punkt_.at(i)<<", ";
 	 std::cout<<") "<<std::endl;
@@ -135,81 +134,7 @@ int AlgorytmPam::wylosuj(std::vector<int> juz_wylosowane)
     return liczba;
 }
 
-std::vector<double> AlgorytmPam::tc(std::vector<int> klasyfikacjaPunktow){
 
-//	policz sume cijh dla wszystkich elementow dla nowego medodoidu
-
-
-	std::vector<punkt> nowe_medodoidy=medodoidy_;
-	double tc_suma=0.0;
-	std::vector<double> tc_vector (k_,DBL_MAX);
-	for (int m=0;m<medodoidy_.size();m++){
-	// stare medodidy
-		double tc_min=DBL_MAX;
-		std::pair<int,double> medodoid_kandydat; // <polozenie,wyliczone tc>
-		for (int p=0; p<dane_.size(); p++){
-			double tc=0.0;
-			// kandydaci na nowe medodoidy
-			std::vector<punkt> tymczasowe_nowe_metodoidy=medodoidy_;
-			tymczasowe_nowe_metodoidy.at(m)=dane_.at(p); // wstawiamy nowy punkt w miejsce starego
-			std::vector<int> nowa_klasyfikacja = klasyfikacja_punktow(tymczasowe_nowe_metodoidy,dane_);
-			for(int j=0; j<dane_.size();j++){
-			// klasyfikacja punktow dla nowej klasyfikacja
-//				std::cout<<"przed if'ami"<<std::endl;
-				// scenariusz 1. Oj przechodzi z Om do Oj,2
-//				if(klasyfikacjaPunktow.at(j)==m && nowa_klasyfikacja.at(j)!=p){
-//					double tc_temp=cjmp(dane_.at(j),medodoidy_.at(m),dane_.at(nowa_klasyfikacja.at(j) ));
-//					//std::cout<<"scenariusz 1 tmp+="<<tc_temp<<std::endl;
-//					tc+=tc_temp;
-//				}
-//				// scenariusz 2. Oj  z Om do Op
-//				if(klasyfikacjaPunktow.at(j)==m &&  nowa_klasyfikacja.at(j)==p){
-				double tc_temp=cjmp(dane_.at(j),medodoidy_.at(m),dane_.at(p));
-				std::cout<<"scenariusz 2 tmp+="<<tc_temp<<std::endl;
-				tc+=tc_temp;
-//				}
-//				// scenariusz 3. Oj nie było w klasie Om i nie przechodzi do Op
-//				if (klasyfikacjaPunktow.at(j)!=m &&  nowa_klasyfikacja.at(j)!=p)
-//					//std::cout<<"scenariusz 3"<<std::endl;
-//					continue;
-//				// scenariusz 4. Oj nalezy do klasy reprezentowanej przez Oj,2
-//				// i przechodzi do klasy Op
-//				if (klasyfikacjaPunktow.at(j)!=m &&  nowa_klasyfikacja.at(j)==p){
-//					double tc_temp=cjmp(dane_.at(j),medodoidy_.at(klasyfikacjaPunktow.at(j)),dane_.at(p));
-////					std::cout<<"scenariusz 4 tmp+="<<tc_temp<<std::endl;
-//					tc+= tc_temp;
-//				}
-
-
-			}
-//			std::cout<<"nr "<< m <<" : (";
-//			for(int k=0;k<dane_.at(p).size();k++)
-//								std::cout<<dane_.at(p).at(k)<<", ";
-//							std::cout<<")"<<" z wynikiem tc= "<<tc;
-//			std::cout<<" w starej klasyfikacji:"<<klasyfikacjaPunktow.at(p)<<" w nowej: "<<nowa_klasyfikacja.at(p)<<std::endl;
-
-			//	 zapisz polozenie  oraz tc nowego kandydata
-			if(tc<medodoid_kandydat.second){
-				medodoid_kandydat.first=p;
-				medodoid_kandydat.second=tc;
-			}
-		}
-
-		//		zamien stary medodoid z nowym
-		// zamiast tc_suma zrob vector<tc> o dlugosci k_ i jego przekaz
-		if (medodoid_kandydat.second<0){
-			nowe_medodoidy.at(m)=dane_.at(medodoid_kandydat.first);
-			tc_vector.at(m)=medodoid_kandydat.second;
-
-			std::cout<<"nowy medodoid nr "<< m <<" : (";
-			for(int k=0;k<medodoidy_.at(m).size();k++)
-				std::cout<<medodoidy_.at(m).at(k)<<", ";
-			std::cout<<")"<<" z wynikiem tc= "<<tc_vector.at(m)<<std::endl;
-		}
-	}
-	medodoidy_ =nowe_medodoidy;
-	return tc_vector;
-}
 
 double AlgorytmPam::cij(punkt i,punkt j){
 	double wynik=0;
@@ -225,11 +150,6 @@ double AlgorytmPam::cij(punkt i,punkt j){
 	}
 
 	wynik=sqrt(kwadrat_wyniku);
-	return wynik;
-}
-
-double AlgorytmPam::cjmp(punkt j,punkt m, punkt p){
-	double wynik=cij(j,p)-cij(j,m);
 	return wynik;
 }
 

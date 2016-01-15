@@ -15,9 +15,7 @@ class AlgorytmPam : public  Algorytm{
 	std::vector<punkt> medodoidy_;
 
 	int wylosuj(std::vector<int> juz_wylosowane);
-	std::vector<double> tc(std::vector<int> klasyfikacjaPunktow);
 	double cij(punkt i,punkt j);
-	double cjmp(punkt j,punkt m, punkt p);
 	std::vector<int> klasyfikacja_punktow(std::vector<punkt> metodoidy,std::vector<punkt> dane_do_klasyfikacji);
 	int index(std::vector<int> data,int value);
 
