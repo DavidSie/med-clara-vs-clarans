@@ -15,12 +15,14 @@ std::vector<punkt> AlgorytmClara::wyliczenieMedodoidow(){
 	std::vector<double> tc_;
 	for(int i=0;i<5;i++){
 	//	losujemy 40+2k danych ze zbioru
-		std::cout<<"[Algorytm Clara] iteracja "<<i<<std::endl;
+		std::cout<<"[INFO][CLARA] iteracja "<<i<<std::endl;
 		std::vector<punkt> daneLosowe=losowanieProbekDanych(dane_,40+2*k_);
 		AlgorytmPam pam=AlgorytmPam(daneLosowe,k_);
 		wyniki.push_back(pam.pam());
+
 		//	 liczymy dla wszystkich elementow average dissimilarity
-		tc_.push_back(tc(dane_,wyniki.at(i)) );
+		tc_.push_back(tc(pam,dane_));
+
 	}
 
 	// znajdywanie wyniku z najmniejszym tc
@@ -31,7 +33,9 @@ std::vector<punkt> AlgorytmClara::wyliczenieMedodoidow(){
 			wynik=wyniki.at(i);
 		}
 	}
-
+	std::cout<<"[INFO][CLARA] najlepszy wynik dla całego zbioru : "<<tc_min<<" dla punktow "<<std::endl;
+	for (int i=0; i<wynik.size(); i++)
+		wypiszPunkt( wynik.at(i));
 	return wynik;
 }
 
@@ -51,7 +55,6 @@ std::vector<punkt> AlgorytmClara::losowanieProbekDanych(std::vector<punkt> data,
 	}
 	return sprobkowaneDane;
 }
-double AlgorytmClara::tc(std::vector<punkt> dane,std::vector<punkt> medodoidy){
-//	TODO wypelnic cialo funkcji tc dla alg. Clara
-	return 1.0;
+double AlgorytmClara::tc(AlgorytmPam pam, std::vector<punkt> dane){
+	return pam.totalCost(dane, pam.getMedoidsIdx()).first;
 }

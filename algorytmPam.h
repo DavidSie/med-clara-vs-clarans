@@ -13,6 +13,7 @@ class AlgorytmPam : public  Algorytm{
 	int k_; //liczba grup
 	int n_;
 	std::vector<punkt> medodoidy_;
+	std::vector<int> medoids_idx_;
 
 	int wylosuj(std::vector<int> juz_wylosowane);
 	double cij(punkt i,punkt j);
@@ -20,12 +21,15 @@ class AlgorytmPam : public  Algorytm{
 	int index(std::vector<int> data,int value);
 
 	public:
-	void wypiszPunkt(punkt punkt_);
 	std::pair< double, std::map<int, std::vector<int> >  > totalCost(std::vector<punkt> dane_,std::vector<int> medoids_idx);
 	AlgorytmPam(){srand(time(NULL));}
 	void setData(const std::vector<punkt> &dane,int k){dane_=dane; k_=k; n_=dane.size();}
 	AlgorytmPam(const std::vector<punkt> &dane,int k){dane_=dane; k_=k; n_=dane.size(); srand(time(NULL));}
 	std::vector<punkt>  pam();
+
+	std::vector<punkt> getMedoids(){return medodoidy_;}
+	std::vector<int> getMedoidsIdx(){return medoids_idx_;}
+
 
 
 

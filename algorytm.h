@@ -27,6 +27,7 @@ protected:
 	std::vector<punkt> dane_;
 
 public:
+	void wypiszPunkt(punkt punkt_);
 //	Algorytm(const std::vector<punkt> &dane){dane_=dane;}
 };
 

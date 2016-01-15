@@ -55,6 +55,7 @@ std::vector<punkt> AlgorytmPam::pam(){
 			for(int i=0; i<medoids_idx.size();i++){
 				medodoidy_.at(i)=dane_.at(medoids_idx.at(i));
 				wypiszPunkt(medodoidy_.at(i));
+				medoids_idx_=medoids_idx;
 			}
 			break;
 		}
@@ -79,13 +80,6 @@ int AlgorytmPam::index(std::vector<int> data,int value){
 	return index;
 
 }
- void AlgorytmPam::wypiszPunkt(punkt punkt_){
-	 std::cout<<"[INFO][PAM]( ";
-	 for (int i=0; i<punkt_.size();i++)
-		 std::cout<<punkt_.at(i)<<", ";
-	 std::cout<<") "<<std::endl;
- }
-
 
 // zwraca tc , medoids
 std::pair< double, std::map<int, std::vector<int> >  >  AlgorytmPam::totalCost(std::vector<punkt> data,std::vector<int> medoids_idx){
