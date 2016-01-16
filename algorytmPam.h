@@ -16,8 +16,6 @@ class AlgorytmPam : public  Algorytm{
 	std::vector<int> medoids_idx_;
 
 	int wylosuj(std::vector<int> juz_wylosowane);
-	double cij(punkt i,punkt j);
-	std::vector<int> klasyfikacja_punktow(std::vector<punkt> metodoidy,std::vector<punkt> dane_do_klasyfikacji);
 	int index(std::vector<int> data,int value);
 
 	public:

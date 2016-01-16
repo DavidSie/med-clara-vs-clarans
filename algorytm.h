@@ -26,8 +26,11 @@ class Algorytm {
 protected:
 	std::vector<punkt> dane_;
 
+	double cij(punkt i,punkt j);
+	std::vector<double> silhouette_samples(std::vector<punkt> data,std::vector<punkt> medoids);
 public:
 	void wypiszPunkt(punkt punkt_);
+	std::vector<int> klasyfikacja_punktow(std::vector<punkt> metodoidy,std::vector<punkt> dane_do_klasyfikacji);
 //	Algorytm(const std::vector<punkt> &dane){dane_=dane;}
 };
 
