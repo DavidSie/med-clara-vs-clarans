@@ -14,8 +14,9 @@ std::vector<punkt> generujDane();
 using namespace std;
 
 int main() {
-	AlgorytmClara algClara=AlgorytmClara(generujDane(),2);
-	algClara.wyliczenieMedodoidow();
+	std::vector<punkt> dane=generujDane();
+	AlgorytmClara algClara=AlgorytmClara(dane,3);
+	std::cout<<"[INFO] wspolczynnik Silhouette dla alg. Clara: "<<algClara.silhouette_score(dane,algClara.wyliczenieMedodoidow())<<endl;
 
 //	AlgorytmPam algPam=AlgorytmPam(generujDane(),2);
 //	algPam.pam();
