@@ -36,6 +36,7 @@ std::vector<punkt> AlgorytmClara::wyliczenieMedodoidow(){
 	std::cout<<"[INFO][CLARA] najlepszy wynik dla całego zbioru : "<<tc_min<<" dla punktow "<<std::endl;
 	for (int i=0; i<wynik.size(); i++)
 		wypiszPunkt( wynik.at(i));
+	medoidy_=wynik;
 	return wynik;
 }
 

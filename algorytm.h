@@ -40,7 +40,9 @@ public:
 	void wypiszPunkt(punkt punkt_);
 	std::vector<int> klasyfikacja_punktow(std::vector<punkt> metodoidy,std::vector<punkt> dane_do_klasyfikacji);
 	double silhouette_score(std::vector<punkt> data,std::vector<punkt> medoids);
-//	Algorytm(const std::vector<punkt> &dane){dane_=dane;}
+	std::vector < std::vector <double> > fmiara(std::vector<punkt> dane,std::vector<punkt> medoidy,std::vector<punkt> estymata_medoidow);
+	void  rysujMacierz( std::vector < std::vector <double> > dane);
+	//	Algorytm(const std::vector<punkt> &dane){dane_=dane;}
 };
 
 

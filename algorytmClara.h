@@ -14,11 +14,13 @@
 class AlgorytmClara : public  Algorytm{
 	int k_;
 	int n_;
+	std::vector<punkt> medoidy_;
 	std::vector<punkt> losowanieProbekDanych(std::vector<punkt> data, int ilosc);
 	double tc(AlgorytmPam pam, std::vector<punkt> dane);
 public:
 	AlgorytmClara(const std::vector<punkt> &dane,int k){dane_=dane; k_=k; n_=dane.size();}
 	std::vector<punkt> wyliczenieMedodoidow();
+	std::vector<punkt> getMedoids(){ return medoidy_;}
 };
 
 

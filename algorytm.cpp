@@ -203,3 +203,81 @@
  	 }
  	 return iloraz;
   }
+
+
+ std::vector < std::vector <double> > Algorytm::fmiara(std::vector<punkt> dane,std::vector<punkt> medoidy,std::vector<punkt> estymata_medoidow){
+	 std::vector<int> przydzial_do_klas= klasyfikacja_punktow(medoidy,dane);
+	 std::vector<int> estymata_przydzialu_do_klas= klasyfikacja_punktow(estymata_medoidow,dane);
+	 // nij - liczba obiektow klasy i przydzielona do klasy j
+	 // ni  - liczba obiektow w klasie i (dot. estymaty)
+	 // nj - liczba obiektow w klasie j (dot. estymaty)
+	 std::vector<int> nj(estymata_medoidow.size(),0); // liczba obiektow przydzielonych do kolejnych klas
+	 for(unsigned int i=0;i<estymata_przydzialu_do_klas.size();i++)
+		 nj.at(estymata_przydzialu_do_klas.at(i))+=1;
+
+	 std::vector<int> ni(medoidy.size(),0); // liczba obiektow przydzielonych do kolejnych klas
+	 for(unsigned int i=0;i<przydzial_do_klas.size();i++)
+		 ni.at(przydzial_do_klas.at(i))+=1;
+
+	 std::vector < std::vector <int> > nij; // zewnetrzny wektor i - do kad powinny trafic , wew j- dokad trafily finalnie
+	 std::vector < std::vector <double> > recall;
+	 std::vector < std::vector <double> > precision;
+	 std::vector < std::vector <double> > fMiara;
+
+	 //inicjalizacja
+	 for(unsigned int i=0;i<medoidy.size();i++){
+		 std::vector <int> tmp;
+		 std::vector <double> tmpDouble;
+		 recall.push_back(tmpDouble);
+		 precision.push_back(tmpDouble);
+		 fMiara.push_back(tmpDouble);
+		 nij.push_back(tmp);
+		 for(unsigned int j=0;j<estymata_medoidow.size();j++){
+			 nij.at(i).push_back(0);
+			 recall.at(i).push_back(0.0);
+			 precision.at(i).push_back(0.0);
+			 fMiara.at(i).push_back(0.0);
+		 }
+	 }
+
+
+	 for(unsigned int i=0;i<dane.size();i++)
+		 nij.at(przydzial_do_klas.at(i)).at(estymata_przydzialu_do_klas.at(i))+=1;
+
+
+	 double sredniaFmiara=0.0;
+	 for(unsigned int i=0;i< nij.size(); i++)
+		 for(unsigned int j=0;j< nij.at(i).size(); j++){
+			 std::cout<<"i= "<<i<<" j= "<<j<<std::endl;
+			 std::cout<<"nij.at(i).at(j) "<<nij.at(i).at(j)<<std::endl;
+			 std::cout<<"ni.at(i) "<<(double)ni.at(i)<<std::endl;
+			 std::cout<<"nj.at(j) "<<(double)nj.at(j)<<std::endl;
+			 recall.at(i).at(j)=nij.at(i).at(j)/(double)ni.at(i);
+			 std::cout<<"recall.at(i).at(j) "<<recall.at(i).at(j)<<std::endl;
+			 precision.at(i).at(j)=nij.at(i).at(j)/(double)nj.at(j);
+			 std::cout<<"precision.at(i).at(j) "<<precision.at(i).at(j)<<std::endl;
+			 if (precision.at(i).at(j)<0.0001 && recall.at(i).at(j)<0.0001 )
+				 continue;
+			 fMiara.at(i).at(j)=2*recall.at(i).at(j)*precision.at(i).at(j)/(precision.at(i).at(j)+recall.at(i).at(j));
+			 std::cout<<"fMiara.at(i).at(j) "<<fMiara.at(i).at(j)<<std::endl;
+			 std::cout<<"_______________________________________ "<<std::endl;
+			 sredniaFmiara+= fMiara.at(i).at(j);
+		 }
+	 std::cout<<"[INFO] macierz F-miary";
+	 // rysowanie macierzy
+	 rysujMacierz(fMiara);
+
+	 return fMiara;
+ }
+ void  Algorytm::rysujMacierz( std::vector < std::vector <double> > dane){
+	 std::cout<<std::endl;
+	 for(unsigned int i=0;i< dane.size(); i++){
+
+		std::cout<<"[INFO] |";
+	 	for(unsigned int j=0;j< dane.at(i).size(); j++)
+	 		std::cout<< dane.at(i).at(j)<<"  ";
+	 	std::cout<<"|";
+	 	std::cout<<std::endl;
+	 }
+	 std::cout<<std::endl;
+ }
