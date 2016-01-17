@@ -14,11 +14,27 @@ std::vector<punkt> generujDane();
 using namespace std;
 
 int main() {
-	AlgorytmClara algClara=AlgorytmClara(generujDane(),2);
-	algClara.wyliczenieMedodoidow();
+	std::vector<punkt> dane=generujDane();
 
-//	AlgorytmPam algPam=AlgorytmPam(generujDane(),2);
-//	algPam.pam();
+	AlgorytmClara algClara=AlgorytmClara(dane,2);
+	time_t startClara = time(0);
+	algClara.wyliczenieMedodoidow();
+	time_t endClara = time(0);
+	std::cout<<"[INFO] wspolczynnik Silhouette dla alg. Clara: "<<algClara.silhouette_score(dane,algClara.getMedoids())<<endl;
+
+	double timeClara = difftime(endClara, startClara);
+	std::cout<<"[INFO] czas wykonania algorytmu Clara: "<<timeClara<<" s"<<std::endl;
+
+	AlgorytmPam algPam=AlgorytmPam(dane,2);
+	time_t startPam = time(0);
+	algPam.pam();
+	time_t endPam = time(0);
+	std::cout<<"[INFO] wspolczynnik Silhouette dla alg. Pam: "<<algPam.silhouette_score(dane,algPam.getMedoids())<<endl;
+	double timePam = difftime(endPam, startPam);
+	std::cout<<"[INFO] czas wykonania algorytmu Pam: "<<timePam<<" s"<<std::endl;
+
+	std::cout<<"[INFO] srednia F-miara dla alg. Clara: "<<endl;
+	algClara.fmiara(dane,algPam.getMedoids(),algClara.getMedoids());
     return 0;
 }
 
