@@ -17,6 +17,7 @@
 #include <limits.h>
 #include <cfloat>
 #include <map>
+#include <sstream>
 
 // definiujemy nowe zmienne
 typedef std::vector<double> punkt;
@@ -24,6 +25,7 @@ typedef std::vector<std::vector<double> > wektorPunktow;
 
 class Algorytm {
 	 std::vector<double> intra_cluster_distance(std::vector<punkt> medoidy,std::vector<punkt> data);
+	 std::vector<double> nearest_cluster_distance(std::vector<punkt> medoidy,std::vector<punkt> data);
 protected:
 	std::vector<punkt> dane_;
 
@@ -32,6 +34,7 @@ protected:
 	std::vector<double> maximum(std::vector<double> A, std::vector<double> B);
 	std::vector<double> roznica(std::vector<double> A, std::vector<double> B);
 	std::vector<double> iloraz(std::vector<double> A, std::vector<double> B);
+
 public:
 	double odlegloscEuklidesowa(punkt i,punkt j);
 	void wypiszPunkt(punkt punkt_);

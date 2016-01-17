@@ -36,17 +36,64 @@
 
 
  std::vector<double> Algorytm::intra_cluster_distance(std::vector<punkt> medoidy,std::vector<punkt> data){
-	 //dla kazdego punktu liczyby sr odleglosc od medoidow
+	 //dla kazdego punktu
+	 // srednia odleglosc punktu od do innych punktow w klastrze
 	 std::vector<double> intra_cluster_distance;
-	 for(int i=0;i<data.size();i++){
+	 std::vector<int> klasyfikacja=klasyfikacja_punktow(medoidy,data);
+	 for(unsigned int i=0;i<data.size();i++){
 		 double distance=0.0;
-		 for(unsigned int j=0;j<medoidy.size();j++)
-			 distance+=cij(medoidy.at(j),data.at(i));
-		 intra_cluster_distance.push_back(distance/medoidy.size());
+		 int nr_klastra=klasyfikacja.at(i);
+		 std::vector<punkt> punkty_w_klastrze;
+		 //poszykiwanie punktow z tego klastra
+		 for(unsigned int j=0;j<data.size();j++){
+			 if(klasyfikacja.at(j)==nr_klastra)
+				 punkty_w_klastrze.push_back(data.at(j));
+		 }
+		 for(unsigned int k=0;k<punkty_w_klastrze.size();k++)
+			 distance+=cij(punkty_w_klastrze.at(k),data.at(i));
+		 intra_cluster_distance.push_back(distance/punkty_w_klastrze.size());
 	 }
 	 return intra_cluster_distance;
 
  }
+ std::vector<double> Algorytm::nearest_cluster_distance(std::vector<punkt> medoidy,std::vector<punkt> data){
+	 // liczymy srednia odleglosci od punktu w innych klastach
+	 // zwracamy minimum powyższych wynikow
+	 std::vector<double> nearest_cluster_distance(data.size(),DBL_MAX);
+	 std::vector<int> klasyfikacja=klasyfikacja_punktow(medoidy,data);
+	 unsigned int ilosc_klastrow=medoidy.size()+1;
+	 for(unsigned int i=0;i<data.size();i++){
+			 unsigned int nr_klastra=klasyfikacja.at(i);
+			 std::vector<double> srednie; // srednie dla kazdego klastra
+
+			 // iteracja po innych klastrach
+			 for(unsigned int id_klastra=0;id_klastra<ilosc_klastrow;id_klastra++){
+				 std::vector<punkt> punkty_w_klastrze;
+				 if(id_klastra==nr_klastra)
+					 continue;
+				 for(unsigned int j=0;j<data.size();j++){
+					 if(klasyfikacja.at(j)==id_klastra)
+						 punkty_w_klastrze.push_back(data.at(j));
+				 }
+				 //sumujemy punkty w klastrze i dzielimy przez ilosc
+				double suma=0.0;
+				for(unsigned int j=0;j<punkty_w_klastrze.size();j++){
+					suma+=cij(data.at(i),punkty_w_klastrze.at(j));
+				}
+				srednie.push_back(suma/punkty_w_klastrze.size());
+			 }
+			 //wyszukiwanie minimalnej sredniej
+			 for(unsigned int iter=0; iter<srednie.size();iter++)
+				 if(nearest_cluster_distance.at(i)>srednie.at(iter))
+					 nearest_cluster_distance.at(i)=srednie.at(iter);
+	 }
+	 //poszykiwanie punktow z tego klastra
+
+	 //
+
+	 return nearest_cluster_distance;
+ }
+
 
 
  double Algorytm::odlegloscEuklidesowa(punkt i,punkt j){
@@ -63,7 +110,7 @@
  	}
  	else
  	{
- 		const std::string SIZE_OF_COMPARED_VECTORS_DONT_MATCH="SIZE_OF_COMPARED_VECTORS_DONT_MATCH";
+ 		const std::string SIZE_OF_COMPARED_VECTORS_DONT_MATCH="[ERROR][Cij] SIZE_OF_COMPARED_VECTORS_DONT_MATCH";
  		throw SIZE_OF_COMPARED_VECTORS_DONT_MATCH;
  	}
 
@@ -90,13 +137,16 @@
 //	     is 2 <= n_labels <= n_samples - 1.
 	 std::vector<double> sil_samples;
 	 std::vector<int>klasyfikacja_punktow_= klasyfikacja_punktow(medoids,data);
+
+	 // srednia odleglosc punktu od do innych punktow w klastrze
 	 std::vector<double> A=intra_cluster_distance( medoids,data); // dystans od najblizszego klastra (nie tego doktorego nalezy punkt)
 
+	 // minimalny średni dystans pomiedzy i-tym punktem a wszystkimi pozostalymi punktami (z poza klastra)
+	 std::vector<double> B=nearest_cluster_distance( medoids,data);
 
-	 std::vector<double> B; // dystans do najblizszego klastra (do ktorego nalezy)
-	 for(int i;i<data.size();i++)
-		 B.push_back( cij(data.at(i),medoids.at(klasyfikacja_punktow_.at(i))) );
-
+//	 for(unsigned int i=0;i<data.size();i++){
+//		 B.push_back( cij(data.at(i),medoids.at(klasyfikacja_punktow_.at(i))) );
+//	 }
 	 sil_samples = iloraz(roznica(B,A), maximum(A, B))   ;
 
 	 return sil_samples;
@@ -112,7 +162,11 @@
 	 	}
 	 	else
 	 	{
-	 		const std::string SIZE_OF_COMPARED_VECTORS_DONT_MATCH="SIZE_OF_COMPARED_VECTORS_DONT_MATCH";
+	 		std::ostringstream size1;
+	 		std::ostringstream size2;
+	 		size1 << A.size();
+	 		size2 << B.size();
+	 		const std::string SIZE_OF_COMPARED_VECTORS_DONT_MATCH="[ERROR][MAXIMUM] SIZE_OF_COMPARED_VECTORS_DONT_MATCH no. 1 size= "+ size1.str() +" no. 2 size= " + size2.str();
 	 		throw SIZE_OF_COMPARED_VECTORS_DONT_MATCH;
 	 }
 	 return max;
@@ -126,7 +180,11 @@
 	 	}
 	 	else
 	 	{
-	 		const std::string SIZE_OF_COMPARED_VECTORS_DONT_MATCH="SIZE_OF_COMPARED_VECTORS_DONT_MATCH";
+	 		std::ostringstream size1;
+	 		std::ostringstream size2;
+	 		size1 << A.size();
+	 		size2 << B.size();
+	 		const std::string SIZE_OF_COMPARED_VECTORS_DONT_MATCH="[ERROR][ROZNICA] SIZE_OF_COMPARED_VECTORS_DONT_MATCH no. 1 size= "+ size1.str() +" no. 2 size= " + size2.str();
 	 		throw SIZE_OF_COMPARED_VECTORS_DONT_MATCH;
 	 }
 	 return roznica;
@@ -140,7 +198,7 @@
  	 	}
  	 	else
  	 	{
- 	 		const std::string SIZE_OF_COMPARED_VECTORS_DONT_MATCH="SIZE_OF_COMPARED_VECTORS_DONT_MATCH";
+ 	 		const std::string SIZE_OF_COMPARED_VECTORS_DONT_MATCH="[ERROR][ILORAZ] SIZE_OF_COMPARED_VECTORS_DONT_MATCH";
  	 		throw SIZE_OF_COMPARED_VECTORS_DONT_MATCH;
  	 }
  	 return iloraz;

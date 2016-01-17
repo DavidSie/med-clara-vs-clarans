@@ -15,11 +15,21 @@ using namespace std;
 
 int main() {
 	std::vector<punkt> dane=generujDane();
-	AlgorytmClara algClara=AlgorytmClara(dane,3);
+	AlgorytmClara algClara=AlgorytmClara(dane,2);
+	time_t startClara = time(0);
 	std::cout<<"[INFO] wspolczynnik Silhouette dla alg. Clara: "<<algClara.silhouette_score(dane,algClara.wyliczenieMedodoidow())<<endl;
+	time_t endClara = time(0);
+	double timeClara = difftime(endClara, startClara) * 1000.0;
+	std::cout<<"[INFO] czas wykonania algorytmu Clara: "<<timeClara<<" ms"<<std::endl;
 
-//	AlgorytmPam algPam=AlgorytmPam(generujDane(),2);
-//	algPam.pam();
+	AlgorytmPam algPam=AlgorytmPam(dane,2);
+	time_t startPam = time(0);
+	algPam.pam();
+	time_t endPam = time(0);
+	std::cout<<"[INFO] wspolczynnik Silhouette dla alg. Pam: "<<algPam.silhouette_score(dane,algPam.getMedoids())<<endl;
+	double timePam = difftime(endPam, startPam) * 1000.0;
+		std::cout<<"[INFO] czas wykonania algorytmu Pam: "<<timePam<<" ms"<<std::endl;
+
     return 0;
 }
 
@@ -30,7 +40,7 @@ std::vector<punkt> generujDane(){
 
 
 //    testy alg. clara
-	int n=100;
+	int n=150;
 	int dl_wektora=2;
 	std::vector<punkt> dane;
 	for(int i=0;i<n;i++){
