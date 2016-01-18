@@ -1,8 +1,8 @@
 /*
  * algorytmClarans.h
  *
- *  Created on: 12 gru 2015
- *      Author: davidsiecinski
+ *  Created on: 17.01.2016
+ *      Author: Michal Lutoborski
  */
 
 #ifndef ALGORYTMCLARANS_H_
@@ -10,8 +10,9 @@
 
 #include "algorytm.h"
 #include "algorytmPam.h"
+#include "nodeClarans.h"
 
-class AlgorytmClarans :public  Algorytm
+class AlgorytmClarans : public  Algorytm
 {
     public:
         AlgorytmClarans(const std::vector<punkt> &dane,int max_neighbor, int num_local, int medoidsQuantity)
@@ -33,9 +34,9 @@ class AlgorytmClarans :public  Algorytm
         int k_;
         int n_;
 
-        wektorPunktow bestNode;
+        nodeClarans bestNode;
 
-        wektorPunktow pickRandomNode();
+        nodeClarans pickRandomNode();
 
         std::vector<punkt> medoidy_;
         std::vector<punkt> losowanieProbekDanych(std::vector<punkt> data, int ilosc);

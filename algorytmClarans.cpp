@@ -1,8 +1,8 @@
 /*
- * algorytmClarans.cpp
+ * algorytmClarans.h
  *
- *  Created on: 12 gru 2015
- *      Author: davidsiecinski
+ *  Created on: 17.01.2016
+ *      Author: Michal Lutoborski
  */
 
  #include "algorytmClarans.h"
@@ -13,9 +13,8 @@
 
 std::vector<punkt> AlgorytmClarans::calculate()
 {
-    wektorPunktow current;
-    wektorPunktow neighbor;
-    wektorPunktow bestNode;
+    nodeClarans current;
+    nodeClarans neighbor;
 
     // Initialization
     double minCost = DBL_MAX;
@@ -27,7 +26,11 @@ std::vector<punkt> AlgorytmClarans::calculate()
         // Pick random node from graph
         current = pickRandomNode();
 
+        current.printPosVector();
+        current.printDataVector();
+
         // Test purposes - printing vector
+        /*
         std::cout << "Current vector: " << std::endl;
         for(int i=0; i<current.size(); i++)
         {
@@ -39,6 +42,7 @@ std::vector<punkt> AlgorytmClarans::calculate()
                 else std::cout << ">" << std::endl;
             }
         }
+        */
 
         for(int j = 0; j<max_neighbor; )
         {
@@ -65,12 +69,13 @@ std::vector<punkt> AlgorytmClarans::calculate()
         }
     }
 
-    return bestNode;
+    return bestNode.getDataVector();
 }
 
-wektorPunktow AlgorytmClarans::pickRandomNode()
+nodeClarans AlgorytmClarans::pickRandomNode()
 {
-    wektorPunktow node;
+    nodeClarans node;
+    wektorPunktow nVector;
     bool found = true;
 
     int randPos;
@@ -95,18 +100,10 @@ wektorPunktow AlgorytmClarans::pickRandomNode()
 
         found = true;
 
-        node.push_back(dane_.at(randPos));
+        nVector.push_back(dane_.at(randPos));
     }
 
-    // Test purposes - printing vector
-    std::cout << "Used position vector: < ";
-    for(int i=0; i<usedPos.size(); i++)
-    {
-        // Table notation is from 0 not from 1 so we need to add 1 for correct numeration
-        std::cout << usedPos.at(i) + 1;
-        if(i!=usedPos.size()-1) std::cout << ", ";
-        else std::cout << ">" << std::endl;
-    }
+    node.setNode(usedPos, nVector);
 
     return node;
 }
