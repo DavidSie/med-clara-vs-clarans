@@ -35,7 +35,7 @@ std::vector<punkt> AlgorytmClarans::calculate()
             for(int j=0; j<current.at(i).size(); j++)
             {
                 std::cout << current.at(i).at(j);
-                if(i!=current.size()-1) std::cout << ", ";
+                if(j!=current.at(i).size()-1) std::cout << ", ";
                 else std::cout << ">" << std::endl;
             }
         }
@@ -71,7 +71,7 @@ std::vector<punkt> AlgorytmClarans::calculate()
 wektorPunktow AlgorytmClarans::pickRandomNode()
 {
     wektorPunktow node;
-    bool found = false;
+    bool found = true;
 
     int randPos;
     std::vector<int> usedPos;
@@ -81,19 +81,19 @@ wektorPunktow AlgorytmClarans::pickRandomNode()
     for(int i=0; i < k_; i++)
     {
         // We try to pick random position with uniform distribution
-        while(!found)
+        while(found)
         {
             randPos = 0 + (rand() % (int)(n_-1 - 0 + 1));
             it = std::find(usedPos.begin(),usedPos.end(),randPos);
 
-            if(it != usedPos.end())
+            if(it == usedPos.end())
             {
-                found = true;
+                found = false;
                 usedPos.push_back(randPos);
             }
         }
 
-        found = false;
+        found = true;
 
         node.push_back(dane_.at(randPos));
     }
@@ -102,7 +102,8 @@ wektorPunktow AlgorytmClarans::pickRandomNode()
     std::cout << "Used position vector: < ";
     for(int i=0; i<usedPos.size(); i++)
     {
-        std::cout << usedPos.at(i);
+        // Table notation is from 0 not from 1 so we need to add 1 for correct numeration
+        std::cout << usedPos.at(i) + 1;
         if(i!=usedPos.size()-1) std::cout << ", ";
         else std::cout << ">" << std::endl;
     }
