@@ -194,6 +194,22 @@ void ReadFile(wektorPunktow *pVector)
 
 void ShowMenu(wektorPunktow dane)
 {
+    /*
+    Method contains menu for an application. It should be devided to 3 parts for 3 algorithms.
+    It would be cool if user could input all necessary parameters. To be implemented for now.
+    Time measuring function should give time in miliseconds - can be provided from my other
+    project if necessary.
+
+    TEST PARAMS:
+    GLOBAL:
+    dane - from ReadingModule
+    n = dane.size()
+    k = 2
+    CLARANS
+    max_neighbors = 100
+    num_local = 5
+    */
+
    cout << "\n<<---------------------- CLARA VS CLARANS ---------------------->>" << endl;
    cout << "Wybierz metode grupowania: [a/b]" << endl;
    cout << "a - grupowanie przy uzyciu algorytmu CLARA" << endl;
@@ -238,6 +254,17 @@ void ShowMenu(wektorPunktow dane)
         {
             sterOK = true;
             cout << "Implementation in progress..." << endl;
+
+            AlgorytmClarans algClarans = AlgorytmClarans(dane, 100, 5, 2);
+            time_t startClarans = time(0);
+            algClarans.calculate();
+            time_t endClarans = time(0);
+
+            // To be implemented correctly
+            //std::cout<<"[INFO][CLARANS] Silhouette: "<<algClarans.silhouette_score(dane,algClara.getMedoids())<<endl;
+
+            double timeClarans = difftime(endClarans, startClarans);
+            std::cout<<"[INFO][CLARANS] Time elapsed: "<< timeClarans << " s" << std::endl;
         }
         else cout << "Niewlasciwy znak. Wybierz opcje a lub b." << endl;
     }
