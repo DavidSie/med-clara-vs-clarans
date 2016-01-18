@@ -194,7 +194,7 @@ void ReadFile(wektorPunktow *pVector)
 
 void ShowMenu(wektorPunktow dane)
 {
-   cout << "<<---------------------- CLARA VS CLARANS ---------------------->>" << endl;
+   cout << "\n<<---------------------- CLARA VS CLARANS ---------------------->>" << endl;
    cout << "Wybierz metode grupowania: [a/b]" << endl;
    cout << "a - grupowanie przy uzyciu algorytmu CLARA" << endl;
    cout << "b - grupowanie przy uzyciu algorytmu CLARANS" << endl;
@@ -241,6 +241,8 @@ void ShowMenu(wektorPunktow dane)
         }
         else cout << "Niewlasciwy znak. Wybierz opcje a lub b." << endl;
     }
+
+    getchar();
 }
 
 /*
