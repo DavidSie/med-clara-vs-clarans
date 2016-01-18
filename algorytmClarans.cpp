@@ -9,6 +9,7 @@
 
  #include <stdlib.h>
  #include <time.h>
+ #include <algorithm>
 
 std::vector<punkt> AlgorytmClarans::calculate()
 {
@@ -25,6 +26,19 @@ std::vector<punkt> AlgorytmClarans::calculate()
     {
         // Pick random node from graph
         current = pickRandomNode();
+
+        // Test purposes - printing vector
+        std::cout << "Current vector: " << std::endl;
+        for(int i=0; i<current.size(); i++)
+        {
+            std::cout << "Point " << i << ": < ";
+            for(int j=0; j<current.at(i).size(); j++)
+            {
+                std::cout << current.at(i).at(j);
+                if(i!=current.size()-1) std::cout << ", ";
+                else std::cout << ">" << std::endl;
+            }
+        }
 
         for(int j = 0; j<max_neighbor; )
         {
@@ -82,6 +96,15 @@ wektorPunktow AlgorytmClarans::pickRandomNode()
         found = false;
 
         node.push_back(dane_.at(randPos));
+    }
+
+    // Test purposes - printing vector
+    std::cout << "Used position vector: < ";
+    for(int i=0; i<usedPos.size(); i++)
+    {
+        std::cout << usedPos.at(i);
+        if(i!=usedPos.size()-1) std::cout << ", ";
+        else std::cout << ">" << std::endl;
     }
 
     return node;
