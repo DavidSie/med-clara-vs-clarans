@@ -7,8 +7,6 @@
 
 #include "algorytmClara.h"
 
-
-
 std::vector<punkt> AlgorytmClara::wyliczenieMedodoidow(){
 	std::vector<punkt> wynik;
 	std::vector<wektorPunktow> wyniki;

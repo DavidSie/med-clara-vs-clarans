@@ -10,7 +10,8 @@
 
 #include "algorytm.h"
 
-class AlgorytmClarans :public  Algorytm{
+class AlgorytmClarans :public  Algorytm
+{
 
 };
 
