@@ -1,5 +1,10 @@
 #include "nodeClarans.h"
 
+void nodeClarans::pickRandomNeighbor()
+{
+
+}
+
 void nodeClarans::printPosVector()
 {
     // Test purposes - printing vector

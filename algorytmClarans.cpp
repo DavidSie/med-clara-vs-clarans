@@ -13,6 +13,10 @@
 
 std::vector<punkt> AlgorytmClarans::calculate()
 {
+    /*
+    Should find an improvement not to pick node which was already picked once
+    */
+
     nodeClarans current;
     nodeClarans neighbor;
 
@@ -28,21 +32,6 @@ std::vector<punkt> AlgorytmClarans::calculate()
 
         current.printPosVector();
         current.printDataVector();
-
-        // Test purposes - printing vector
-        /*
-        std::cout << "Current vector: " << std::endl;
-        for(int i=0; i<current.size(); i++)
-        {
-            std::cout << "Point " << i << ": < ";
-            for(int j=0; j<current.at(i).size(); j++)
-            {
-                std::cout << current.at(i).at(j);
-                if(j!=current.at(i).size()-1) std::cout << ", ";
-                else std::cout << ">" << std::endl;
-            }
-        }
-        */
 
         for(int j = 0; j<max_neighbor; )
         {
