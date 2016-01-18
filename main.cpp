@@ -43,7 +43,7 @@ void ReadFile(wektorPunktow *pVector)
     while(!pathOK)
     {
         sterOK = false;
-        string defaultPath = "c:\\users\\michal\\desktop\\car.data.txt";
+        string defaultPath = "car.data.txt";
 
         cout << "Please enter full path to the file:" << endl;
 
@@ -219,7 +219,6 @@ void ShowMenu(wektorPunktow dane)
             algClara.wyliczenieMedodoidow();
             time_t endClara = time(0);
             std::cout<<"[INFO] wspolczynnik Silhouette dla alg. Clara: "<<algClara.silhouette_score(dane,algClara.getMedoids())<<endl;
-
             double timeClara = difftime(endClara, startClara);
             std::cout<<"[INFO] czas wykonania algorytmu Clara: "<<timeClara<<" s"<<std::endl;
 
