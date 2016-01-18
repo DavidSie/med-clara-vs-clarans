@@ -264,7 +264,7 @@ void ShowMenu(wektorPunktow dane)
             //std::cout<<"[INFO][CLARANS] Silhouette: "<<algClarans.silhouette_score(dane,algClara.getMedoids())<<endl;
 
             double timeClarans = difftime(endClarans, startClarans);
-            std::cout<<"[INFO][CLARANS] Time elapsed: "<< timeClarans << " s" << std::endl;
+            std::cout<<"[INFO][CLARANS] Czas wykonania algorytmu: "<< timeClarans << " s" << std::endl;
         }
         else cout << "Niewlasciwy znak. Wybierz opcje a lub b." << endl;
     }
