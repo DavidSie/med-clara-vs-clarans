@@ -246,21 +246,21 @@ void ShowMenu(wektorPunktow dane)
             sterOK = true;
 
             AlgorytmClara algClara=AlgorytmClara(dane,2);
-            time_t startClara = time(0);
+            clock_t startClara = std::clock();
             algClara.wyliczenieMedodoidow();
-            time_t endClara = time(0);
+            clock_t endClara = std::clock();
             std::cout<<"[INFO] wspolczynnik Silhouette dla alg. Clara: "<<algClara.silhouette_score(dane,algClara.getMedoids())<<endl;
 
-            double timeClara = difftime(endClara, startClara);
-            std::cout<<"[INFO] czas wykonania algorytmu Clara: "<<timeClara<<" s"<<std::endl;
+            double timeClara = (endClara - startClara) / (double)(CLOCKS_PER_SEC / 1000);
+            std::cout<<"[INFO] czas wykonania algorytmu Clara: "<<timeClara<<" ms"<<std::endl;
 
             AlgorytmPam algPam=AlgorytmPam(dane,2);
-            time_t startPam = time(0);
+            clock_t startPam = std::clock();
             algPam.pam();
-            time_t endPam = time(0);
+            clock_t endPam = std::clock();
             std::cout<<"[INFO] wspolczynnik Silhouette dla alg. Pam: "<<algPam.silhouette_score(dane,algPam.getMedoids())<<endl;
-            double timePam = difftime(endPam, startPam);
-            std::cout<<"[INFO] czas wykonania algorytmu Pam: "<<timePam<<" s"<<std::endl;
+            double timePam = (endPam - startPam) / (double)(CLOCKS_PER_SEC / 1000);
+            std::cout<<"[INFO] czas wykonania algorytmu Pam: "<<timePam<<" ms"<<std::endl;
 
             std::cout<<"[INFO] srednia F-miara dla alg. Clara: "<<endl;
             algClara.fmiara(dane,algPam.getMedoids(),algClara.getMedoids());
@@ -271,15 +271,15 @@ void ShowMenu(wektorPunktow dane)
             cout << "Implementation in progress..." << endl;
 
             AlgorytmClarans algClarans = AlgorytmClarans(dane, kMNClar, kNLClar, kClar, sampleFactor);
-            time_t startClarans = time(0);
+            clock_t startClarans = std::clock();
             algClarans.calculate();
-            time_t endClarans = time(0);
+            clock_t endClarans = std::clock();
 
             // To be implemented correctly
             //std::cout<<"[INFO][CLARANS] Silhouette: "<<algClarans.silhouette_score(dane,algClara.getMedoids())<<endl;
 
-            double timeClarans = difftime(endClarans, startClarans);
-            std::cout<<"[INFO][CLARANS] Czas wykonania algorytmu: "<< timeClarans << " s" << std::endl;
+            double timeClarans = (endClarans - startClarans) / (double)(CLOCKS_PER_SEC / 1000);
+            std::cout<<"[INFO][CLARANS] Czas wykonania algorytmu: "<< timeClarans << " ms" << std::endl;
         }
         else cout << "Niewlasciwy znak. Wybierz opcje a lub b." << endl;
     }
