@@ -1,8 +1,20 @@
 #include "nodeClarans.h"
 
-void nodeClarans::pickRandomNeighbor()
+nodeClarans nodeClarans::pickRandomNeighbor()
 {
+    nodeClarans randomNeighbour;
+    std::vector<int> positionVector = posVector;
 
+    bool stop = false;
+
+    while(!stop)
+    {
+        rand()
+    }
+
+
+
+    return randomNeighbour;
 }
 
 void nodeClarans::printPosVector()

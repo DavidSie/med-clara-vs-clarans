@@ -3,6 +3,9 @@
 #include <iostream>
 #include <sstream>
 #include <fstream>
+#include <cstdlib>
+#include <ctime>
+
 #include "algorytmClara.h"
 #include "algorytmClarans.h"
 #include "readingModule.h"
@@ -16,6 +19,9 @@ using namespace std;
 
 int main() {
 	// std::vector<punkt> dane=generujDane();
+
+	// Initialize random
+	srand( time( NULL ) );
 
 	// Set data vector which is taking data from Reading Module
 	vector<punkt> dane;
