@@ -17,7 +17,16 @@ void ShowMenu(wektorPunktow dane);
 
 using namespace std;
 
-// Test values Clarans
+/*
+    TEST PARAMS:
+    GLOBAL:
+    dane - from ReadingModule
+    n = dane.size()
+    k = 2
+    CLARANS
+    max_neighbors = 100
+    num_local = 5
+    */
 const int kClar = 4;
 const int kMNClar = 100;
 const int kNLClar = 5;
@@ -214,15 +223,6 @@ void ShowMenu(wektorPunktow dane)
     It would be cool if user could input all necessary parameters. To be implemented for now.
     Time measuring function should give time in miliseconds - can be provided from my other
     project if necessary.
-
-    TEST PARAMS:
-    GLOBAL:
-    dane - from ReadingModule
-    n = dane.size()
-    k = 2
-    CLARANS
-    max_neighbors = 100
-    num_local = 5
     */
 
    cout << "\n<<---------------------- CLARA VS CLARANS ---------------------->>" << endl;

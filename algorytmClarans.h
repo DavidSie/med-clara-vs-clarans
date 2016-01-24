@@ -26,8 +26,7 @@ class AlgorytmClarans : public  Algorytm
             this->num_local = num_local;
         }
 
-        std::vector<punkt> calculate();
-        std::vector<punkt> getMedoids(){ return medoidy_;}
+        std::pair<nodeClarans, double> calculate();
 
     private:
         int max_neighbor;
@@ -37,14 +36,9 @@ class AlgorytmClarans : public  Algorytm
         int sampleSize;
 
         nodeClarans bestNode;
+        double bestNodeTC;
 
         nodeClarans pickRandomNode();
-        std::vector<std::vector<double> > createSampleDataset();
-
-        std::vector<punkt> medoidy_;
-        std::vector<punkt> losowanieProbekDanych(std::vector<punkt> data, int ilosc);
-        double tc(AlgorytmPam pam, std::vector<punkt> dane);
-
 };
 
 

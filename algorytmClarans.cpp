@@ -11,7 +11,7 @@
  #include <time.h>
  #include <algorithm>
 
-std::vector<punkt> AlgorytmClarans::calculate()
+std::pair<nodeClarans, double> AlgorytmClarans::calculate()
 {
     /*
     Should find an improvement not to pick node which was already picked once
@@ -20,33 +20,20 @@ std::vector<punkt> AlgorytmClarans::calculate()
     nodeClarans current;
     nodeClarans neighbor;
 
-    std::vector<std::vector<double> > randomData;
     AlgorytmPam pam;
+
+    std::pair<nodeClarans, double> result;
 
     // Initialization
     double minCost = DBL_MAX;
     double tcCurrent = DBL_MAX;
     double tcNeighbor = DBL_MAX;
 
-    std::pair< double, std::map<int, std::vector<int> >  > tcCurrentPAM;
-    std::pair< double, std::map<int, std::vector<int> >  > tcNeighborPAM;
-
-
-
-
-
-
-
-
-
-
-
     for(int i = 0; i<num_local; i++)
     {
         // Pick random node from graph
         current = pickRandomNode();
-        tcCurrentPAM = pam.totalCost(dane_, current.getPosVector());
-        tcCurrent = tcCurrentPAM.first;
+        tcCurrent = pam.totalCost(dane_, current.getPosVector()).first;
 
         // current.printPosVector();
         // current.printDataVector();
@@ -57,8 +44,7 @@ std::vector<punkt> AlgorytmClarans::calculate()
             neighbor = current.pickRandomNeighbor(dane_, k_);
 
             // Calculate cost of picked neighbor
-            tcNeighborPAM = pam.totalCost(dane_, neighbor.getPosVector());
-            tcNeighbor = tcNeighborPAM.first;
+            tcNeighbor = pam.totalCost(dane_, neighbor.getPosVector()).first;
 
             std::cout << "Current data:" << std::endl;
             current.printPosVector();
@@ -71,11 +57,11 @@ std::vector<punkt> AlgorytmClarans::calculate()
             std::cout << "Current total cost: " << tcCurrent << std::endl;
             std::cout << "Neighbor total cost: " << tcNeighbor << std::endl;
 
-
             // Check neighbor cost
             if(tcNeighbor < tcCurrent)
             {
                 current = neighbor;
+                tcCurrent = tcNeighbor;
                 j=0;
             }
             else j++;
@@ -84,12 +70,19 @@ std::vector<punkt> AlgorytmClarans::calculate()
         // Check current cost against global
         if(tcCurrent < minCost)
         {
-            minCost = tcCurrent;
+            bestNodeTC = minCost = tcCurrent;
             bestNode = current;
         }
     }
 
-    return bestNode.getDataVector();
+    std::cout << "Best node data:" << std::endl;
+    bestNode.printPosVector();
+
+    std::cout << "Best node total cost: " << bestNodeTC << std::endl;
+
+    result = std::make_pair(bestNode, bestNodeTC);
+
+    return result;
 }
 
 nodeClarans AlgorytmClarans::pickRandomNode()
@@ -126,13 +119,6 @@ nodeClarans AlgorytmClarans::pickRandomNode()
     node.setNode(usedPos, nVector);
 
     return node;
-}
-
-std::vector<std::vector<double> > AlgorytmClarans::createSampleDataset()
-{
-    std::vector<std::vector<double> > sampleDataset;
-
-    return sampleDataset;
 }
 
 /*
