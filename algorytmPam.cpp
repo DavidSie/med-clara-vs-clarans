@@ -83,7 +83,7 @@ int AlgorytmPam::index(std::vector<int> data,int value){
 
 // zwraca tc , medoids
 std::pair< double, std::map<int, std::vector<int> >  >  AlgorytmPam::totalCost(std::vector<punkt> data,std::vector<int> medoids_idx){
-	int size = dane_.size();
+	int size = data.size();
 	double total_cost=0.0;
 	std::map<int, std::vector<int> >  medoids;
 	std::vector<int> emptyvector;
