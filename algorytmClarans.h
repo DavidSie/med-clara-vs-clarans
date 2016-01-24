@@ -15,12 +15,11 @@
 class AlgorytmClarans : public  Algorytm
 {
     public:
-        AlgorytmClarans(const std::vector<punkt> &dane,int max_neighbor, int num_local, int medoidsQuantity, int sampleFactor)
+        AlgorytmClarans(const std::vector<punkt> &dane,int max_neighbor, int num_local, int medoidsQuantity)
         {
             dane_=dane;
             k_= medoidsQuantity;
             n_=dane.size();
-            sampleSize=n_*sampleFactor;
 
             this->max_neighbor = max_neighbor;
             this->num_local = num_local;

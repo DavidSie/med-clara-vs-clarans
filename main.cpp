@@ -17,24 +17,6 @@ void ShowMenu(wektorPunktow dane);
 
 using namespace std;
 
-/*
-    TEST PARAMS:
-    GLOBAL:
-    dane - from ReadingModule
-    n = dane.size()
-    k = 2
-    CLARANS
-    max_neighbors = 100
-    num_local = 5
-    */
-const int kClar = 4;
-const int kMNClar = 100;
-const int kNLClar = 5;
-
-// This value should be according to conversion 0,028 => ~50 but not more than 100 samples to work optimally
-const double sampleFactor = 0.028;
-
-
 int main() {
 	// std::vector<punkt> dane=generujDane();
 
@@ -225,15 +207,21 @@ void ShowMenu(wektorPunktow dane)
     project if necessary.
     */
 
-   cout << "\n<<---------------------- CLARA VS CLARANS ---------------------->>" << endl;
-   cout << "Wybierz metode grupowania: [a/b]" << endl;
-   cout << "a - grupowanie przy uzyciu algorytmu CLARA" << endl;
-   cout << "b - grupowanie przy uzyciu algorytmu CLARANS" << endl;
-   cout << "W celu zamkniecia programu nacisnij kombinacje klawiszy CTRL+C lub" << endl;
-   cout << "po prostu zamknij program." << endl;
+    cout << "\n<<---------------------- CLARA VS CLARANS ---------------------->>" << endl;
+    cout << "Wybierz metode grupowania: [a/b]" << endl;
+    cout << "a - grupowanie przy uzyciu algorytmu CLARA" << endl;
+    cout << "b - grupowanie przy uzyciu algorytmu CLARANS" << endl;
+    cout << "W celu zamkniecia programu nacisnij kombinacje klawiszy CTRL+C lub" << endl;
+    cout << "po prostu zamknij program." << endl;
 
-   bool sterOK = false;
-   char ster = ' ';
+    bool sterOK = false;
+    char ster = ' ';
+
+    std::pair<nodeClarans, double> claransBest;
+
+    int k = 2;
+    int kMNClar = 250;
+    int kNLClar = 2;
 
     while(!sterOK)
     {
@@ -245,71 +233,72 @@ void ShowMenu(wektorPunktow dane)
         {
             sterOK = true;
 
-            AlgorytmClara algClara=AlgorytmClara(dane,2);
+            std::cout << "Prosze wprowadzic parametry algorytmu" << std::endl;
+            std::cout << "Prosze wprowadzic liczbe medioidow: " << std::endl;
+            std::cin >> k;
+
+            std::cout << "<<---------------------- CLARA ALGORITHM ---------------------->>" << std::endl;
+
+            AlgorytmClara algClara=AlgorytmClara(dane,k);
             clock_t startClara = std::clock();
             algClara.wyliczenieMedodoidow();
             clock_t endClara = std::clock();
             std::cout<<"[INFO] wspolczynnik Silhouette dla alg. Clara: "<<algClara.silhouette_score(dane,algClara.getMedoids())<<endl;
 
             double timeClara = (endClara - startClara) / (double)(CLOCKS_PER_SEC / 1000);
-            std::cout<<"[INFO] czas wykonania algorytmu Clara: "<<timeClara<<" ms"<<std::endl;
+            std::cout<<"[INFO] Czas wykonania algorytmu Clara: "<<timeClara<<" ms"<<std::endl;
 
-            AlgorytmPam algPam=AlgorytmPam(dane,2);
+            AlgorytmPam algPam=AlgorytmPam(dane,k);
             clock_t startPam = std::clock();
             algPam.pam();
             clock_t endPam = std::clock();
-            std::cout<<"[INFO] wspolczynnik Silhouette dla alg. Pam: "<<algPam.silhouette_score(dane,algPam.getMedoids())<<endl;
+            std::cout<<"[INFO][CLARA] Współczynnik Silhouette dla alg. Pam: "<<algPam.silhouette_score(dane,algPam.getMedoids())<<endl;
             double timePam = (endPam - startPam) / (double)(CLOCKS_PER_SEC / 1000);
-            std::cout<<"[INFO] czas wykonania algorytmu Pam: "<<timePam<<" ms"<<std::endl;
+            std::cout<<"[INFO][CLARA] Czas wykonania algorytmu Pam: "<<timePam<<" ms"<<std::endl;
 
-            std::cout<<"[INFO] srednia F-miara dla alg. Clara: "<<endl;
+            std::cout<<"[INFO][CLARA] Średnia F-miara dla alg. Clara: "<<std::endl;
             algClara.fmiara(dane,algPam.getMedoids(),algClara.getMedoids());
         }
         else if(ster=='b')
         {
             sterOK = true;
-            cout << "Implementation in progress..." << endl;
 
-            AlgorytmClarans algClarans = AlgorytmClarans(dane, kMNClar, kNLClar, kClar, sampleFactor);
+            std::cout << "Prosze wprowadzic parametry algorytmu" << std::endl;
+            std::cout << "Prosze wprowadzic liczbe medioidow: " << std::endl;
+            std::cin >> k;
+
+            std::cout << "Prosze wprowadzic maksymalna liczbe sasiadow: " << std::endl;
+            std::cin >> kMNClar;
+
+            std::cout << "Prosze wprowadzic liczbe iteracji algorytmu: " << std::endl;
+            std::cin >> kNLClar;
+
+            std::cout << "<<---------------------- CLARANS ALGORITHM ---------------------->>" << std::endl;
+
+            AlgorytmClarans algClarans = AlgorytmClarans(dane, kMNClar, kNLClar, k);
             clock_t startClarans = std::clock();
-            algClarans.calculate();
+            claransBest = algClarans.calculate();
             clock_t endClarans = std::clock();
 
-            // To be implemented correctly
-            //std::cout<<"[INFO][CLARANS] Silhouette: "<<algClarans.silhouette_score(dane,algClara.getMedoids())<<endl;
+            AlgorytmPam algPam=AlgorytmPam(dane,k);
+            clock_t startPam = std::clock();
+            algPam.pam();
+            clock_t endPam = std::clock();
+            std::cout<<"[INFO][PAM] Współczynnik Silhouette dla alg. Pam: "<<algPam.silhouette_score(dane,algPam.getMedoids())<<endl;
+            double timePam = (endPam - startPam) / (double)(CLOCKS_PER_SEC / 1000);
+            std::cout<<"[INFO][PAM] Czas wykonania algorytmu Pam: "<<timePam<<" ms"<<std::endl;
+
+            std::cout << "[INFO][CLARANS] Współczynnik Silhouette dla alg. Clarans: " << std::endl;
+            std::cout << algClarans.silhouette_score(dane,claransBest.first.getDataVector()) << std::endl;
 
             double timeClarans = (endClarans - startClarans) / (double)(CLOCKS_PER_SEC / 1000);
             std::cout<<"[INFO][CLARANS] Czas wykonania algorytmu: "<< timeClarans << " ms" << std::endl;
+
+            std::cout << "[INFO][CLARANS] Średnia F-miara dla alg. Clarans: " << std::endl;
+            algClarans.fmiara(dane,algPam.getMedoids(),claransBest.first.getDataVector());
         }
         else cout << "Niewlasciwy znak. Wybierz opcje a lub b." << endl;
     }
 
     getchar();
 }
-
-/*
-std::vector<punkt> generujDane(){
-//    testy alg. pam
-//	int n=3;
-//	int dl_wektora=2;
-
-
-//    testy alg. clara
-	int n=100;
-	int dl_wektora=2;
-	std::vector<punkt> dane;
-	for(int i=0;i<n;i++){
-		punkt punktNr (dl_wektora,1+i);
-		dane.push_back(punktNr);
-	}
-
-	for(int i=0;i<n;i++){
-		punkt punktNr (dl_wektora,550+i);
-		dane.push_back(punktNr);
-	}
-	return dane;
-}
-*/
-
-
-
