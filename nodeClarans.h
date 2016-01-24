@@ -9,7 +9,7 @@
 class nodeClarans
 {
     public:
-        nodeClarans pickRandomNeighbor();
+        nodeClarans pickRandomNeighbor(const std::vector<std::vector<double> > &dane, const int medoidsQuantity);
 
         std::vector<int> getPosVector() {return posVector;}
         std::vector<std::vector<double> > getDataVector() {return dataVector;}

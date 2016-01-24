@@ -17,6 +17,12 @@ void ShowMenu(wektorPunktow dane);
 
 using namespace std;
 
+// Test values Clarans
+const int kClar = 4;
+const int kMNClar = 100;
+const int kNLClar = 5;
+
+
 int main() {
 	// std::vector<punkt> dane=generujDane();
 
@@ -261,7 +267,7 @@ void ShowMenu(wektorPunktow dane)
             sterOK = true;
             cout << "Implementation in progress..." << endl;
 
-            AlgorytmClarans algClarans = AlgorytmClarans(dane, 100, 5, 2);
+            AlgorytmClarans algClarans = AlgorytmClarans(dane, kMNClar, kNLClar, kClar);
             time_t startClarans = time(0);
             algClarans.calculate();
             time_t endClarans = time(0);

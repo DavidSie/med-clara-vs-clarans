@@ -1,20 +1,57 @@
 #include "nodeClarans.h"
 
-nodeClarans nodeClarans::pickRandomNeighbor()
+nodeClarans nodeClarans::pickRandomNeighbor(const std::vector<std::vector<double> > &dane,const int medoidsQuantity)
 {
-    nodeClarans randomNeighbour;
+    nodeClarans randomNeighbor;
     std::vector<int> positionVector = posVector;
-
+    std::vector<int> tempPosVector = posVector;
+    std::vector<int> checkPosVector;
+    std::vector<std::vector<double> > dVector;
+    int randPos;
+    int n = dane.size();
     bool stop = false;
+    bool notRandom = false;
 
     while(!stop)
     {
-        rand()
+        randPos = 0 + (rand() % (int)(n-1 - 0 + 1));
+        for(int i = 0; i < positionVector.size(); i++)
+        {
+            if(positionVector.at(i)==randPos)
+            {
+                notRandom = true;
+                break;
+            }
+        }
+        if(!notRandom)
+        {
+            stop = true;
+            tempPosVector.at(rand()%tempPosVector.size()) = randPos;
+
+            for(int j = 0; j < createdNeighbors.size(); j++)
+            {
+                checkPosVector = createdNeighbors.at(j).getPosVector();
+                if(tempPosVector==checkPosVector)
+                {
+                    tempPosVector = posVector;
+                    notRandom = true;
+                    stop = false;
+                }
+            }
+        }
     }
 
+    positionVector = tempPosVector;
 
+    for(int i = 0; i < medoidsQuantity; i++)
+    {
+        dVector.push_back(dane.at(positionVector.at(i)));
+    }
 
-    return randomNeighbour;
+    randomNeighbor.setNode(positionVector, dVector);
+    createdNeighbors.push_back(randomNeighbor);
+
+    return randomNeighbor;
 }
 
 void nodeClarans::printPosVector()

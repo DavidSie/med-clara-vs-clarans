@@ -30,12 +30,21 @@ std::vector<punkt> AlgorytmClarans::calculate()
         // Pick random node from graph
         current = pickRandomNode();
 
-        current.printPosVector();
-        current.printDataVector();
+        // current.printPosVector();
+        // current.printDataVector();
 
         for(int j = 0; j<max_neighbor; )
         {
             // Pick random neighbor of current node
+
+            neighbor = current.pickRandomNeighbor(dane_, k_);
+            std::cout << "Current data:" << std::endl;
+            current.printPosVector();
+            // current.printDataVector();
+
+            std::cout << "Neighbor data:" << std::endl;
+            neighbor.printPosVector();
+            // neighbor.printDataVector();
 
 
             // Calculate cost of picked neighbor
