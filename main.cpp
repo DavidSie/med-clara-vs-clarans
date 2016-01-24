@@ -22,6 +22,9 @@ const int kClar = 4;
 const int kMNClar = 100;
 const int kNLClar = 5;
 
+// This value should be according to conversion 0,028 => ~50 but not more than 100 samples to work optimally
+const double sampleFactor = 0.028;
+
 
 int main() {
 	// std::vector<punkt> dane=generujDane();
@@ -267,7 +270,7 @@ void ShowMenu(wektorPunktow dane)
             sterOK = true;
             cout << "Implementation in progress..." << endl;
 
-            AlgorytmClarans algClarans = AlgorytmClarans(dane, kMNClar, kNLClar, kClar);
+            AlgorytmClarans algClarans = AlgorytmClarans(dane, kMNClar, kNLClar, kClar, sampleFactor);
             time_t startClarans = time(0);
             algClarans.calculate();
             time_t endClarans = time(0);

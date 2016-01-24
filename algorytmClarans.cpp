@@ -20,15 +20,33 @@ std::vector<punkt> AlgorytmClarans::calculate()
     nodeClarans current;
     nodeClarans neighbor;
 
+    std::vector<std::vector<double> > randomData;
+    AlgorytmPam pam;
+
     // Initialization
     double minCost = DBL_MAX;
     double tcCurrent = DBL_MAX;
     double tcNeighbor = DBL_MAX;
 
+    std::pair< double, std::map<int, std::vector<int> >  > tcCurrentPAM;
+    std::pair< double, std::map<int, std::vector<int> >  > tcNeighborPAM;
+
+
+
+
+
+
+
+
+
+
+
     for(int i = 0; i<num_local; i++)
     {
         // Pick random node from graph
         current = pickRandomNode();
+        tcCurrentPAM = pam.totalCost(dane_, current.getPosVector());
+        tcCurrent = tcCurrentPAM.first;
 
         // current.printPosVector();
         // current.printDataVector();
@@ -36,8 +54,12 @@ std::vector<punkt> AlgorytmClarans::calculate()
         for(int j = 0; j<max_neighbor; )
         {
             // Pick random neighbor of current node
-
             neighbor = current.pickRandomNeighbor(dane_, k_);
+
+            // Calculate cost of picked neighbor
+            tcNeighborPAM = pam.totalCost(dane_, neighbor.getPosVector());
+            tcNeighbor = tcNeighborPAM.first;
+
             std::cout << "Current data:" << std::endl;
             current.printPosVector();
             // current.printDataVector();
@@ -46,8 +68,8 @@ std::vector<punkt> AlgorytmClarans::calculate()
             neighbor.printPosVector();
             // neighbor.printDataVector();
 
-
-            // Calculate cost of picked neighbor
+            std::cout << "Current total cost: " << tcCurrent << std::endl;
+            std::cout << "Neighbor total cost: " << tcNeighbor << std::endl;
 
 
             // Check neighbor cost
@@ -104,6 +126,13 @@ nodeClarans AlgorytmClarans::pickRandomNode()
     node.setNode(usedPos, nVector);
 
     return node;
+}
+
+std::vector<std::vector<double> > AlgorytmClarans::createSampleDataset()
+{
+    std::vector<std::vector<double> > sampleDataset;
+
+    return sampleDataset;
 }
 
 /*
