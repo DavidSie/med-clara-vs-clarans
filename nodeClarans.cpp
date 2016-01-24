@@ -14,10 +14,11 @@ nodeClarans nodeClarans::pickRandomNeighbor(const std::vector<std::vector<double
 
     while(!stop)
     {
+        notRandom = false;
         randPos = 0 + (rand() % (int)(n-1 - 0 + 1));
-        for(int i = 0; i < positionVector.size(); i++)
+        for(int i = 0; i < tempPosVector.size(); i++)
         {
-            if(positionVector.at(i)==randPos)
+            if(tempPosVector.at(i)==randPos)
             {
                 notRandom = true;
                 break;
@@ -26,6 +27,7 @@ nodeClarans nodeClarans::pickRandomNeighbor(const std::vector<std::vector<double
         if(!notRandom)
         {
             stop = true;
+
             tempPosVector.at(rand()%tempPosVector.size()) = randPos;
 
             for(int j = 0; j < createdNeighbors.size(); j++)
@@ -34,7 +36,7 @@ nodeClarans nodeClarans::pickRandomNeighbor(const std::vector<std::vector<double
                 if(tempPosVector==checkPosVector)
                 {
                     tempPosVector = posVector;
-                    notRandom = true;
+                    notRandom = false;
                     stop = false;
                 }
             }

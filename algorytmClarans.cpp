@@ -31,6 +31,7 @@ std::pair<nodeClarans, double> AlgorytmClarans::calculate()
 
     for(int i = 0; i<num_local; i++)
     {
+        std::cout << "<-----------------------MAIN ITERATION NO " << i << "----------------------->" << std::endl;
         // Pick random node from graph
         current = pickRandomNode();
         tcCurrent = pam.totalCost(dane_, current.getPosVector()).first;
@@ -46,6 +47,7 @@ std::pair<nodeClarans, double> AlgorytmClarans::calculate()
             // Calculate cost of picked neighbor
             tcNeighbor = pam.totalCost(dane_, neighbor.getPosVector()).first;
 
+            /*
             std::cout << "Current data:" << std::endl;
             current.printPosVector();
             // current.printDataVector();
@@ -56,6 +58,7 @@ std::pair<nodeClarans, double> AlgorytmClarans::calculate()
 
             std::cout << "Current total cost: " << tcCurrent << std::endl;
             std::cout << "Neighbor total cost: " << tcNeighbor << std::endl;
+            */
 
             // Check neighbor cost
             if(tcNeighbor < tcCurrent)
@@ -73,6 +76,12 @@ std::pair<nodeClarans, double> AlgorytmClarans::calculate()
             bestNodeTC = minCost = tcCurrent;
             bestNode = current;
         }
+
+        std::cout << "Best node data (so far):" << std::endl;
+        bestNode.printPosVector();
+
+        std::cout << "Best node total cost (so far): " << bestNodeTC << std::endl;
+        result = std::make_pair(bestNode, bestNodeTC);
     }
 
     std::cout << "Best node data:" << std::endl;
@@ -120,43 +129,3 @@ nodeClarans AlgorytmClarans::pickRandomNode()
 
     return node;
 }
-
-/*
- std::vector<punkt> AlgorytmClarans::wyliczenieMedodoidow()
- {
-	std::vector<punkt> wynik;
-	std::vector<wektorPunktow> wyniki;
-	std::vector<double> tc_;
-	for(int i=0;i<5;i++)
-    {
-	//	losujemy 40+2k danych ze zbioru
-		std::cout<<"[INFO][CLARA] iteracja "<<i<<std::endl;
-		std::vector<punkt> daneLosowe=losowanieProbekDanych(dane_,40+2*k_);
-		AlgorytmPam pam=AlgorytmPam(daneLosowe,k_);
-		wyniki.push_back(pam.pam());
-
-		//	 liczymy dla wszystkich elementow average dissimilarity
-		tc_.push_back(tc(pam,dane_));
-
-	}
-
-	// znajdywanie wyniku z najmniejszym tc
-	double tc_min=DBL_MAX;
-	for (int i=0;i<wyniki.size();i++)
-    {
-		if(tc_.at(i)<tc_min){
-			tc_min=tc_.at(i);
-			wynik=wyniki.at(i);
-		}
-	}
-	std::cout<<"[INFO][CLARA] najlepszy wynik dla całego zbioru : "<<tc_min<<" dla punktow "<<std::endl;
-	for (int i=0; i<wynik.size(); i++)
-		wypiszPunkt( wynik.at(i));
-	medoidy_=wynik;
-	return wynik;
-}
-*/
-
-
-
-
