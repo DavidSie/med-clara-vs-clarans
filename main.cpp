@@ -15,6 +15,10 @@
 void ReadFile(wektorPunktow *pVector);
 void ShowMenu(wektorPunktow dane);
 
+// Global variables
+AlgorytmPam algPam;
+bool pamCalculated = false;
+
 using namespace std;
 
 int main() {
@@ -223,8 +227,6 @@ void ShowMenu(wektorPunktow dane)
     int kMNClar = 250;
     int kNLClar = 2;
 
-    AlgorytmPam algPam;
-    bool pamCalculated = false;
     clock_t startPam, endPam;
 
     while(!sterOK)
@@ -312,7 +314,10 @@ void ShowMenu(wektorPunktow dane)
             std::cout<<"[INFO][CLARANS] Czas wykonania algorytmu Clarans: "<< timeClarans << " ms" << std::endl;
 
             std::cout << "Reset PAM [y/n]?" << std::endl;
-            if(getchar()=='y') pamCalculated = false;
+
+            char sterPam;
+            std::cin >> sterPam;
+            if(sterPam=='y') pamCalculated = false;
 
         }
         else cout << "Niewlasciwy znak. Wybierz opcje a lub b." << endl;
