@@ -21,9 +21,8 @@ bool pamCalculated = false;
 
 using namespace std;
 
-int main() {
-	// std::vector<punkt> dane=generujDane();
-
+int main()
+{
 	// Initialize random
 	srand( time( NULL ) );
 
@@ -58,8 +57,8 @@ void ReadFile(wektorPunktow *pVector)
         cout << "Please enter full path to the file:" << endl;
 
         // To defaultPath just uncomment the following line and comment the line after it
-        fullPath = defaultPath;
-        // cin >> fullPath;
+        // fullPath = defaultPath;
+        cin >> fullPath;
 
         cin.clear();
         cin.sync();
@@ -204,12 +203,6 @@ void ReadFile(wektorPunktow *pVector)
 
 void ShowMenu(wektorPunktow dane)
 {
-    /*
-    Method contains menu for an application. It should be devided to 3 parts for 3 algorithms.
-    It would be cool if user could input all necessary parameters. To be implemented for now.
-    Time measuring function should give time in miliseconds - can be provided from my other
-    project if necessary.
-    */
 
     cout << "\n<<---------------------- CLARA VS CLARANS ---------------------->>" << endl;
     cout << "Wybierz metode grupowania: [a/b]" << endl;
@@ -304,8 +297,8 @@ void ShowMenu(wektorPunktow dane)
             double timePam = (endPam - startPam) / (double)(CLOCKS_PER_SEC / 1000);
             std::cout<<"[INFO][PAM] Czas wykonania algorytmu Pam: "<<timePam<<" ms"<<std::endl;
 
-            std::cout << "[INFO][CLARANS] Średnia F-miara dla alg. Clarans: " << std::endl;
-            algClarans.fmiara(dane,algPam.getMedoids(),claransBest.first.getDataVector());
+            //std::cout << "[INFO][CLARANS] Średnia F-miara dla alg. Clarans: " << std::endl;
+            //algClarans.fmiara(dane,algPam.getMedoids(),claransBest.first.getDataVector());
 
             std::cout << "[INFO][CLARANS] Współczynnik Silhouette dla alg. Clarans: " << std::endl;
             std::cout << algClarans.silhouette_score(dane,claransBest.first.getDataVector()) << std::endl;

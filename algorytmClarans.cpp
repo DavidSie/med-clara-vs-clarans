@@ -13,10 +13,6 @@
 
 std::pair<nodeClarans, double> AlgorytmClarans::calculate()
 {
-    /*
-    Should find an improvement not to pick node which was already picked once
-    */
-
     nodeClarans current;
     nodeClarans neighbor;
 
