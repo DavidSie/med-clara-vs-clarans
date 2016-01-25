@@ -297,8 +297,8 @@ void ShowMenu(wektorPunktow dane)
             double timePam = (endPam - startPam) / (double)(CLOCKS_PER_SEC / 1000);
             std::cout<<"[INFO][PAM] Czas wykonania algorytmu Pam: "<<timePam<<" ms"<<std::endl;
 
-            //std::cout << "[INFO][CLARANS] Średnia F-miara dla alg. Clarans: " << std::endl;
-            //algClarans.fmiara(dane,algPam.getMedoids(),claransBest.first.getDataVector());
+            std::cout << "[INFO][CLARANS] Średnia F-miara dla alg. Clarans: " << std::endl;
+            algClarans.fmiara(dane,algPam.getMedoids(),claransBest.first.getDataVector());
 
             std::cout << "[INFO][CLARANS] Współczynnik Silhouette dla alg. Clarans: " << std::endl;
             std::cout << algClarans.silhouette_score(dane,claransBest.first.getDataVector()) << std::endl;
