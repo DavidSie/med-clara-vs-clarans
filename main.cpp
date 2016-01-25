@@ -223,6 +223,10 @@ void ShowMenu(wektorPunktow dane)
     int kMNClar = 250;
     int kNLClar = 2;
 
+    AlgorytmPam algPam;
+    bool pamCalculated = false;
+    clock_t startPam, endPam;
+
     while(!sterOK)
     {
         cin >> ster;
@@ -243,21 +247,26 @@ void ShowMenu(wektorPunktow dane)
             clock_t startClara = std::clock();
             algClara.wyliczenieMedodoidow();
             clock_t endClara = std::clock();
-            std::cout<<"[INFO] wspolczynnik Silhouette dla alg. Clara: "<<algClara.silhouette_score(dane,algClara.getMedoids())<<endl;
 
+            if(pamCalculated==false)
+            {
+                algPam=AlgorytmPam(dane,k);
+                startPam = std::clock();
+                algPam.pam();
+                endPam = std::clock();
+                pamCalculated = true;
+            }
+
+            std::cout<<"[INFO][CLARA] Średnia F-miara dla alg. CLARA: "<<std::endl;
+            algClara.fmiara(dane,algPam.getMedoids(),algClara.getMedoids());
+
+            std::cout<<"[INFO][PAM] Współczynnik Silhouette dla alg. Pam: "<<algPam.silhouette_score(dane,algPam.getMedoids())<<endl;
+            double timePam = (endPam - startPam) / (double)(CLOCKS_PER_SEC / 1000);
+            std::cout<<"[INFO][PAM] Czas wykonania algorytmu Pam: "<<timePam<<" ms"<<std::endl;
+
+            std::cout<<"[INFO] wspolczynnik Silhouette dla alg. Clara: "<<algClara.silhouette_score(dane,algClara.getMedoids())<<endl;
             double timeClara = (endClara - startClara) / (double)(CLOCKS_PER_SEC / 1000);
             std::cout<<"[INFO] Czas wykonania algorytmu Clara: "<<timeClara<<" ms"<<std::endl;
-
-            AlgorytmPam algPam=AlgorytmPam(dane,k);
-            clock_t startPam = std::clock();
-            algPam.pam();
-            clock_t endPam = std::clock();
-            std::cout<<"[INFO][CLARA] Współczynnik Silhouette dla alg. Pam: "<<algPam.silhouette_score(dane,algPam.getMedoids())<<endl;
-            double timePam = (endPam - startPam) / (double)(CLOCKS_PER_SEC / 1000);
-            std::cout<<"[INFO][CLARA] Czas wykonania algorytmu Pam: "<<timePam<<" ms"<<std::endl;
-
-            std::cout<<"[INFO][CLARA] Średnia F-miara dla alg. Clara: "<<std::endl;
-            algClara.fmiara(dane,algPam.getMedoids(),algClara.getMedoids());
         }
         else if(ster=='b')
         {
@@ -280,22 +289,31 @@ void ShowMenu(wektorPunktow dane)
             claransBest = algClarans.calculate();
             clock_t endClarans = std::clock();
 
-            AlgorytmPam algPam=AlgorytmPam(dane,k);
-            clock_t startPam = std::clock();
-            algPam.pam();
-            clock_t endPam = std::clock();
-            std::cout<<"[INFO][PAM] Współczynnik Silhouette dla alg. Pam: "<<algPam.silhouette_score(dane,algPam.getMedoids())<<endl;
+            if(pamCalculated==false)
+            {
+                algPam=AlgorytmPam(dane,k);
+                startPam = std::clock();
+                algPam.pam();
+                endPam = std::clock();
+                pamCalculated = true;
+            }
+
+            std::cout<<"[INFO][PAM] Współczynnik Silhouette dla alg. Pam: "<<algPam.silhouette_score(dane,algPam.getMedoids())<<std::endl;
             double timePam = (endPam - startPam) / (double)(CLOCKS_PER_SEC / 1000);
             std::cout<<"[INFO][PAM] Czas wykonania algorytmu Pam: "<<timePam<<" ms"<<std::endl;
+
+            std::cout << "[INFO][CLARANS] Średnia F-miara dla alg. Clarans: " << std::endl;
+            algClarans.fmiara(dane,algPam.getMedoids(),claransBest.first.getDataVector());
 
             std::cout << "[INFO][CLARANS] Współczynnik Silhouette dla alg. Clarans: " << std::endl;
             std::cout << algClarans.silhouette_score(dane,claransBest.first.getDataVector()) << std::endl;
 
             double timeClarans = (endClarans - startClarans) / (double)(CLOCKS_PER_SEC / 1000);
-            std::cout<<"[INFO][CLARANS] Czas wykonania algorytmu: "<< timeClarans << " ms" << std::endl;
+            std::cout<<"[INFO][CLARANS] Czas wykonania algorytmu Clarans: "<< timeClarans << " ms" << std::endl;
 
-            std::cout << "[INFO][CLARANS] Średnia F-miara dla alg. Clarans: " << std::endl;
-            algClarans.fmiara(dane,algPam.getMedoids(),claransBest.first.getDataVector());
+            std::cout << "Reset PAM [y/n]?" << std::endl;
+            if(getchar()=='y') pamCalculated = false;
+
         }
         else cout << "Niewlasciwy znak. Wybierz opcje a lub b." << endl;
     }
